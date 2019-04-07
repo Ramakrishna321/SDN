@@ -8,44 +8,43 @@ LOG = core.getLogger()
 
 class SwitchManager(object):
     ''' Class to dispatch events between virtual switches '''
-    slots = ('switches')
+    slots = ('switches', 'conn')
 
     class Switch(object):
         ''' A virtual switch that manages the state of an OVSSwitch '''
         slots = ('mac_to_port')
-        def __init__(self):
+        def __init__(self, conn):
             self.mac_to_port = dict()
+            self.conn = conn
 
-        @staticmethod
-        def resend(pkt_in, out_port, conn):
+        def resend(self, pkt_in, out_port):
             ''' Resend packet to switch on given port(s)'''
             msg = of.ofp_packet_out()
             msg.data = pkt_in
             msg.actions.append(of.ofp_action_output(port=out_port))
-            conn.send(msg)
+            self.conn.send(msg)
 
-        def receive(self, pkt, pkt_in, conn):
+        def receive(self, pkt, pkt_in):
             ''' Receives packet and decides if flow table modification is needed '''
             self.mac_to_port[pkt.src] = pkt_in.in_port
             dst = self.mac_to_port.get(pkt.dst)
             if dst:
-                LOG.info('known destination, installing flow...')
-                self.resend(pkt_in, dst, conn)
+                self.resend(pkt_in, dst)
                 msg = of.ofp_flow_mod()
-                msg.match.dl_dst = of.ofp_match(dl_dst=pkt.dst)
+                msg.match.dl_dst = pkt.dst
                 msg.actions.append(of.ofp_action_output(port=dst))
-                conn.send(msg)
+                self.conn.send(msg)
             else:
-                self.resend(pkt_in, of.OFPP_ALL, conn)
+                self.resend(pkt_in, of.OFPP_ALL)
 
     def __init__(self):
-        self.switches = defaultdict(dict())
+        self.switches = defaultdict(dict)
 
-    def register(self, rawdpid):
+    def register(self, rawdpid, conn):
         dpid = dpid_to_str(rawdpid)
-        self.switches[dpid] = {'switch':SwitchManager.Switch()}
+        self.switches[dpid] = {'switch':SwitchManager.Switch(conn)}
 
-    def dispatch(self, event, conn):
+    def dispatch(self, event):
         pkt = event.parsed
         if not pkt:
             LOG.warning('incomplete packet received, ignore...')
@@ -56,6 +55,6 @@ class SwitchManager(object):
         switchdef = self.switches.get(dpid)
         if switchdef:
             switch = switchdef.get('switch')
-            switch.receive(pkt, pkt_in, conn)
+            switch.receive(pkt, pkt_in)
         else:
-            LOG.warning('unknown switch: %s' % dpid)
+            LOG.warning('DISPATCH: unknown dpid: %s' % dpid)
