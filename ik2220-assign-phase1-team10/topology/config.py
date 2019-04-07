@@ -106,7 +106,8 @@ TOPOLOGY = [
     },
     {
         'name':'fw1',
-        'type':'SWITCH',
+        'type':'FIREWALL',
+        'dpid':'0000000000000001',
         'links':{
             'sw1',
             'sw2',
@@ -114,7 +115,8 @@ TOPOLOGY = [
     },
     {
         'name':'fw2',
-        'type':'SWITCH',
+        'type':'FIREWALL',
+        'dpid':'0000000000000002',
         'links':{
             'napt',
             'sw2',

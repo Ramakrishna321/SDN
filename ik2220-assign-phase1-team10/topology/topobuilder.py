@@ -14,11 +14,12 @@ CLASSES:
 
 class TopoBuilder(object):
     '''Build Mininet topology from configuration'''
-    slots = ('nodes', 'links', '__dpid_cnt')
+    slots = ('nodes', 'links', '__dpid_cnt', '__man_assigned_dpid')
 
     def __init__(self, topology):
         self.links = set()
         self.__dpid_cnt = 1
+        self.__man_assigned_dpid = set()
         self.nodes = defaultdict(dict)
 
         for nodedef in topology:
@@ -28,6 +29,13 @@ class TopoBuilder(object):
             typ = nodedef.get('type')
             if not typ:
                 raise ValueError('`type` not specified')
+            elif typ == 'FIREWALL':
+                # assume fix dpid so pox can reuse the same config
+                dpid = nodedef.get('dpid')
+                if not dpid in self.__man_assigned_dpid:
+                    self.__man_assigned_dpid.add(dpid)
+                else:
+                    raise ValueError('reuse of `dpid`: %s' % dpid)
             if not self.nodes.get(name):
                 self.nodes[name] = nodedef
             else:
@@ -39,8 +47,11 @@ class TopoBuilder(object):
     def __gen_dpid(self):
         ''' Auto generate DPIDs for switches '''
         # ignore 0x from hex() then pad with 0
-        dpid = hex(self.__dpid_cnt)[2:].rjust(16, '0')
-        self.__dpid_cnt += 1
+        while True:
+            dpid = hex(self.__dpid_cnt)[2:].rjust(16, '0')
+            self.__dpid_cnt += 1
+            if not dpid in self.__man_assigned_dpid:
+                break
         return dpid
 
 
@@ -61,7 +72,7 @@ class TopoBuilder(object):
             if typ == 'HOST':
                 ip = node.get('ip')
                 impl.addHost(name, ip=ip)
-            elif typ == 'SWITCH':
+            elif typ in ('SWITCH', 'FIREWALL'):
                 links = node.get('links')
                 if not links:
                     raise ValueError('%s: dangling switch: missing `links`' % name)
@@ -69,7 +80,9 @@ class TopoBuilder(object):
                     for other in links:
                         if not self.__link_exists(name, other):
                             self.links.add((name, other))
-                dpid = self.__gen_dpid()
+                dpid = node.get('dpid')
+                if not dpid:
+                    dpid = self.__gen_dpid()
                 impl.addSwitch(name, dpid=dpid)
             else:
                 raise ValueError('unknown `type`: %s' % typ)
