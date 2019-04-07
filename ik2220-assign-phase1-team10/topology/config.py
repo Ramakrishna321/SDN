@@ -150,7 +150,6 @@ TOPOLOGY = [
         'links':{
             'sw2',
             'insp',
-            'fw2',
         }
     },
 ]
