@@ -29,9 +29,8 @@ class TopoBuilder(object):
             typ = nodedef.get('type')
             if not typ:
                 raise ValueError('`type` not specified')
-            elif typ == 'FIREWALL':
-                # assume fix dpid so pox can reuse the same config
-                dpid = nodedef.get('dpid')
+            dpid = nodedef.get('dpid')
+            if dpid:
                 if not dpid in self.__man_assigned_dpid:
                     self.__man_assigned_dpid.add(dpid)
                 else:

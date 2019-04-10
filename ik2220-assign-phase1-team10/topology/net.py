@@ -1,10 +1,6 @@
 ''' IK2220 Main Mininet network simulation '''
 
-# import guard
-if __name__ != '__main__':
-    raise ImportError()
-
-import config as cfg
+from config import NODEDEFS as cfg
 from topobuilder import TopoBuilder
 
 from mininet.net import Mininet
@@ -13,9 +9,13 @@ from mininet.node import RemoteController
 from mininet.node import OVSSwitch
 from mininet.cli import CLI
 
+# import guard
+if __name__ != '__main__':
+    raise ImportError('module cannot be imported!')
+
 # Build topology with default mininet.topo.Topo implementation
 # from phase1 configuration
-TOPO = TopoBuilder(cfg.TOPOLOGY).build()
+TOPO = TopoBuilder(cfg).build()
 
 # Create remote controller, that will connect to POX on localhost
 CTRL = RemoteController('c0', ip='127.0.0.1', port=6633)
