@@ -1,6 +1,6 @@
 ''' IK2220 SDN Phase 1 Topology Configuration '''
 
-TOPOLOGY = [
+NODEDEFS = [
     {
         'name':'h1',
         'type':'HOST',
@@ -107,6 +107,9 @@ TOPOLOGY = [
     {
         'name':'fw1',
         'type':'SWITCH',
+        'dpid':'0000000000000001',
+        'mode':'FIREWALL',
+        'config':'fw1_rules',
         'links':{
             'sw1',
             'sw2',
@@ -115,6 +118,9 @@ TOPOLOGY = [
     {
         'name':'fw2',
         'type':'SWITCH',
+        'dpid':'0000000000000002',
+        'mode':'FIREWALL',
+        'config':'fw2_rules',
         'links':{
             'napt',
             'sw2',
