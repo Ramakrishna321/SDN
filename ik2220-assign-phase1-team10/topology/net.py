@@ -30,4 +30,23 @@ NET = Mininet(topo=TOPO,
               cleanup=True)
 
 NET.start()
+
+WS1 = NET.get('ws1')
+WS1.cmd('python services/webserver.py  &')
+
+WS2 = NET.get('ws2')
+WS2.cmd('python services/webserver.py &')
+
+WS3 = NET.get('ws3')
+WS3.cmd('python services/webserver.py &')
+
+DS1 = NET.get('ds1')
+DS1.cmd('python services/dns.py %s %s &' % (DS1.IP(), DS1.intfNames()[0]))
+
+DS2 = NET.get('ds2')
+DS2.cmd('python services/dns.py %s %s &' % (DS2.IP(), DS2.intfNames()[0]))
+
+DS3 = NET.get('ds3')
+DS3.cmd('python services/dns.py %s %s &' % (DS3.IP(), DS3.intfNames()[0]))
+
 CLI(NET)
