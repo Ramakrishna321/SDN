@@ -32,7 +32,7 @@ NET = Mininet(topo=TOPO,
 NET.start()
 
 WS1 = NET.get('ws1')
-WS1.cmd('python services/webserver.py  &')
+WS1.cmd('python services/webserver.py &')
 
 WS2 = NET.get('ws2')
 WS2.cmd('python services/webserver.py &')
