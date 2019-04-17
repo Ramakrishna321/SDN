@@ -20,7 +20,9 @@ while True:
     dns = DNS(request)
     print(dns.qd.qname.lower())
     assert dns.opcode == 0, dns.opcode  # QUERY
+    print(dnsqtypes[dns[DNSQR].qtype])
     assert dnsqtypes[dns[DNSQR].qtype] == 'A', dns[DNSQR].qtype
+    
     if dns.qd.qname.lower() in NAME_RECORD:
       dest_ip = NAME_RECORD[dns.qd.qname.lower()]
       query = dns[DNSQR].qname.decode('ascii')  # test.1.2.3.4.example.com.
