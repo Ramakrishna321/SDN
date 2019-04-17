@@ -1,5 +1,8 @@
 from SimpleHTTPServer import SimpleHTTPRequestHandler
 import SocketServer
+import os
+
+os.chdir("services/web")
 
 PORT = 80
 Handler = SimpleHTTPRequestHandler
