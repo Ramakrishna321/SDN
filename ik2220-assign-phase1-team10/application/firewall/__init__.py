@@ -28,8 +28,16 @@ class Firewall(LearningSwitch):
         LearningSwitch.__init__(self, conn, False)
 
     def rm_conn(self, active):
-        timer = self.active_conns.pop(active)
-        timer.cancel()
+        try:
+            timer = self.active_conns.pop(active)
+            timer.cancel()
+        except KeyError:
+            # sometimes this can trigger due to timer.cancel()
+            # baing called later in is_active() then the timer
+            # expires,  just ignore, since we don't want to touch
+            # POX code...
+            LOG.warn('time-out race condition')
+
 
     def timed_msg(self, match, port):
         msg = of.ofp_flow_mod()
@@ -52,7 +60,7 @@ class Firewall(LearningSwitch):
             timer = self.active_conns.pop(conn)
             timer.cancel()
             return True
-        except Exception:
+        except KeyError:
             return False
 
     def match_event(self, event):
