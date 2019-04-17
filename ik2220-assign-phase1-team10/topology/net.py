@@ -1,4 +1,6 @@
 ''' IK2220 Main Mininet network simulation '''
+import sys
+import time
 
 from config import NODEDEFS as cfg
 from topobuilder import TopoBuilder
@@ -8,6 +10,7 @@ from mininet.node import Switch
 from mininet.node import RemoteController
 from mininet.node import OVSSwitch
 from mininet.cli import CLI
+from mininet.log import output
 
 # import guard
 if __name__ != '__main__':
@@ -49,4 +52,18 @@ DS2.cmd('python services/dns.py %s %s &' % (DS2.IP(), DS2.intfNames()[0]))
 DS3 = NET.get('ds3')
 DS3.cmd('python services/dns.py %s %s &' % (DS3.IP(), DS3.intfNames()[0]))
 
-CLI(NET)
+H1 = NET.get('h1')
+H2 = NET.get('h2')
+H3 = NET.get('h3')
+H4 = NET.get('h4')
+
+INSP = NET.get('insp')
+
+script = None
+if len(sys.argv) > 1:
+    script = sys.argv[1]
+    output("STARTING IN TEST MODE\n")
+    output("*** waiting for nodes to come up ***\n")
+    time.sleep(10)
+
+CLI(NET, script=script)
