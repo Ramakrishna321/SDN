@@ -11,12 +11,9 @@ from . import config as cfg
 
 LOG = core.getLogger()
 
-#
-# REMOVE THE PRINTS AND `shit`
-#
 class Firewall(LearningSwitch):
-    IDLE_TIMEOUT = 60
-    HARD_TIMEOUT = 300
+    IDLE_TIMEOUT = 30
+    HARD_TIMEOUT = 60
     slots = ('rules', 'active_conns')
     def __init__(self, conn, config, dpid):
         self.rules = cfg.RULES.get(config)
@@ -106,9 +103,11 @@ class Firewall(LearningSwitch):
             self.timed_msg(match, event.ofp.in_port)
             flip_ports = (ports[1], ports[0])
             flip_conn = (dst_str, src_str, proto, flip_ports)
+            LOG.info("rule matched: {}".format((sip, dip, prot, dport, allow)))
+            LOG.info("connection: {}".format(conn))
             self.active_conns[flip_conn] = Timer(Firewall.IDLE_TIMEOUT, self.rm_conn, args=[flip_conn])
             return True
-        #self.drop_msg(event)
+        self.drop_msg(event)
         return False
 
     def _handle_PacketIn(self, event):
