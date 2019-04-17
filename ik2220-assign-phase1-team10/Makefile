@@ -1,16 +1,25 @@
-.PHONY: clean cleanall topo app test
+SRCTOP = $(shell pwd)
+PYTHONPATH = "${SRCTOP}/:"
+
+export PYTHONPATH
+
+
+# Main make targets
+.PHONY: all topo app clean test
 
 clean:
-	@echo "** not implemented **"
-
-cleanall:
-	@echo "** not implemented **"
+	${MAKE} -C ${SRCTOP}/topology clean
+	@echo "-----------------------------"
+	@echo "Clean up Python bytecode     "
+	@echo "-----------------------------"
+	find ${SRCTOP}/ -name "*.pyc" -delete
 
 topo:
-	@echo "** not implemented **"
+	${MAKE} -C ${SRCTOP}/topology topo; ${MAKE} clean
 
 app:
-	@echo "** not implemented **"
+	${MAKE} -C ${SRCTOP}/application app
 
 test:
-	@echo "** not implemented **"
+	chmod -R +x ${SRCTOP}/test/
+	bash ${SRCTOP}/test/runall.sh
