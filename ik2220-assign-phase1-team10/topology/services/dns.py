@@ -10,7 +10,7 @@ args = sys.argv[1:]
 
 sock = socket(AF_INET, SOCK_DGRAM)
 
-sock.bind((args[1], 53))
+sock.bind((args[0], 53))
 NAME_RECORD= {"ws1.ik2220.com.":"100.0.0.40", "ws2.ik2220.com.":"100.0.0.41", "ws3.ik2220.com.":"100.0.0.42" }
 
 while True:
