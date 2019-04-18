@@ -17,12 +17,13 @@ clean:
 	@echo "-------------------------"
 # this last line is just here because mn returns
 # with non-zero exitcode and it trips up make...
-	@sudo mn -c; \
+	sudo mn -c; \
 	echo -n
 	@echo "-------------------------"
 	@echo "Clean up POX             "
 	@echo "-------------------------"
-	sudo killall python
+	sudo killall python 2>/dev/null; \
+    echo -n ""
 	@echo "-----------------------------"
 	@echo "Clean up runtime artifacts   "
 	@echo "-----------------------------"

@@ -28,7 +28,7 @@ sleep 5
 # Dump the flow tables while Mininet is up and running.
 rm -f $FLOWS
 INFO "Starting flow-dump..."
-while 1; do
+while true; do
     if [ -z "$(ps aux | grep run_mininet.sh | grep -v grep)" ]; then
         break
     fi
