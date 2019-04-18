@@ -12,7 +12,7 @@ INFO "starting POX"
 $DIR/run_pox.sh &> $DIR/pox.log &
 sleep 5
 INFO "starting Mininet"
-$DIR/run_mininet.sh $DIR/test1.cmd $DIR/test2.cmd $DIR/test3.cmd $DIR/test4.cmd $DIR/test5.cmd $DIR/test6.cmd $DIR/test7.cmd $DIR/test8.cmd $DIR/test9.cmd & > $DIR/mininet.log &
+$DIR/run_mininet.sh $DIR/*.cmd & > $DIR/mininet.log &
 sleep 5
 
 rm -f $FLOWS
