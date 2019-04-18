@@ -41,8 +41,8 @@ while true; do
     sleep 2
 done
 
-python3 genreport.py $DIR/mininet.log $SRCTOP/results/phase_1_report.txt
-mkdir -p $SRCTOP/results/log
+python3 $DIR/genreport.py $DIR/mininet.log $SRCTOP/results/phase_1_report.txt
+mkdir -p $TOPDIR/results/log
 for log in $(ls $DIR/*.log); do
-    mv $log $SRCTOP/results/$(basename $log)
+    mv $log $TOPDIR/results/$(basename $log)
 done
