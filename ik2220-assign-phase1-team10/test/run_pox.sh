@@ -10,13 +10,13 @@ POXDIR=${HOME}/pox
 CFG=${SRCTOP}/topology/config.py
 APP=${SRCTOP}/application
 POXAPP=${POXDIR}/ext/application
+
 # creates symlink to the topology/config
-if [ ! -e ${SRCTOP}/application/config.py ]; then
-	ln -s ${CFG} ${SRCTOP}/application/config.py
-fi
+rm -f ${SRCTOP}/application/config.py
+ln -s ${CFG} ${SRCTOP}/application/config.py
+
 # creates symlink to the pox/ext/ directory
-if [ ! -e ${POXDIR}/ext/application ]; then
-	ln -s ${APP} ${POXAPP}
-fi
+rm -f ${POXAPP}
+ln -s ${APP} ${POXAPP}
 
 cd ${POXDIR} && python pox.py application
