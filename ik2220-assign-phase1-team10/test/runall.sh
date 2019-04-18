@@ -11,7 +11,7 @@ source $DIR/logger.sh
 user_abort () {
     INFO "Aborting due to user interrupt..."
     sudo killall python &>/dev/null
-    exit 1
+    exit 0
 }
 trap user_abort SIGINT
 

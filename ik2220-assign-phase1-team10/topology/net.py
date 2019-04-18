@@ -1,6 +1,7 @@
 ''' IK2220 Main Mininet network simulation '''
 import sys
 import time
+from datetime import datetime
 
 from config import NODEDEFS as cfg
 from topobuilder import TopoBuilder
@@ -71,7 +72,9 @@ if len(sys.argv) > 1:
     time.sleep(10)
     output("Begin Tests:\n")
     for script in scripts:
-        output("Testing %s:\n"% script.split('/')[-1])
+        start = datetime.now().replace(microsecond=0).isoformat(" ")
+        name = script.split('/')[-1]
+        output("Testing %s: %s \n"% (name, start))
         CLI(NET, script=script)
         output("------------------------------------------------------------------------------\n")
 else:
