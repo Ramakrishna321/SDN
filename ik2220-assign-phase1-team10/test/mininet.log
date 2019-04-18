@@ -1,81 +1,39 @@
 STARTING IN TEST MODE
 Wait for 10 seconds for nodes to come up:
 Begin Tests:
-Testing curl_test_69.cmd: 2019-04-18 19:48:17 
+Testing curl_test_69.cmd: 2019-04-18 20:46:22 
 
   to  : 0
-curl: (28) Connection timed out after 5002 milliseconds
+curl: (28) Connection timed out after 5001 milliseconds
 
   to  : 0
-curl: (28) Connection timed out after 5006 milliseconds
+curl: (28) Connection timed out after 5003 milliseconds
 
   to  : 0
 curl: (7) Failed to connect to 100.0.0.42 port 69: Connection refused
 
- 100.0.0.12 to 100.0.0.40 : 80
-curl: (28) Operation timed out after 5002 milliseconds with 0 bytes received
+  to  : 0
+curl: (28) Connection timed out after 5001 milliseconds
 
   to  : 0
-curl: (7) Operation timed out after 5002 milliseconds with 0 bytes received
+curl: (28) Connection timed out after 5001 milliseconds
 
- 100.0.0.52 to 100.0.0.41 : 80
+  to  : 0
+curl: (7) Failed to connect to 100.0.0.42 port 69: Connection refused
+------------------------------------------------------------------------------
+Testing curl_test_80.cmd: 2019-04-18 20:46:52 
+
+ 100.0.0.11 to 100.0.0.40 : 80
 curl: (28) Operation timed out after 5001 milliseconds with 0 bytes received
 
   to  : 0
 curl: (7) Operation timed out after 5001 milliseconds with 0 bytes received
-<html>
-    <head>
-        <title>Website</title>
-    </head>
-    <body>
-        <h1>SND and NFV</h1>
-        <p>Congratulations! The HTTP Server is working!
-        <br><a href="page1.html">page1</a>
-        <br><a href="page2.html">page2</a>
-        <br><a href="page3.html">page3</a>
-        </p>
-    </body>
-</html> 
- 100.0.0.30 to 100.0.0.42 : 80
 
-  to  : 0
-curl: (7) Couldn't connect to server
-------------------------------------------------------------------------------
-Testing curl_test_80.cmd: 2019-04-18 19:48:47 
-<html>
-    <head>
-        <title>Website</title>
-    </head>
-    <body>
-        <h1>SND and NFV</h1>
-        <p>Congratulations! The HTTP Server is working!
-        <br><a href="page1.html">page1</a>
-        <br><a href="page2.html">page2</a>
-        <br><a href="page3.html">page3</a>
-        </p>
-    </body>
-</html> 
- 100.0.0.11 to 100.0.0.40 : 80
-
-  to  : 0
-curl: (7) Couldn't connect to server
-<html>
-    <head>
-        <title>Website</title>
-    </head>
-    <body>
-        <h1>SND and NFV</h1>
-        <p>Congratulations! The HTTP Server is working!
-        <br><a href="page1.html">page1</a>
-        <br><a href="page2.html">page2</a>
-        <br><a href="page3.html">page3</a>
-        </p>
-    </body>
-</html> 
  100.0.0.51 to 100.0.0.41 : 80
+curl: (28) Operation timed out after 5003 milliseconds with 0 bytes received
 
   to  : 0
-curl: (7) Couldn't connect to server
+curl: (7) Operation timed out after 5003 milliseconds with 0 bytes received
 <html>
     <head>
         <title>Website</title>
@@ -136,54 +94,54 @@ curl: (7) Couldn't connect to server
 </html> 
  100.0.0.30 to 100.0.0.42 : 80
 ------------------------------------------------------------------------------
-Testing dig_test_53.cmd: 2019-04-18 19:48:58 
+Testing dig_test_53.cmd: 2019-04-18 20:47:13 
 
 ; <<>> DiG 9.9.5-3ubuntu0.2-Ubuntu <<>> ws1.ik2220.com @100.0.0.20
 ;; global options: +cmd
 ;; Got answer:
-;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 14336
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 52989
 ;; flags: qr; QUERY: 0, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 0
 
 ;; ANSWER SECTION:
 ws1.ik2220.com.		1234	IN	A	100.0.0.40
 
-;; Query time: 137 msec
+;; Query time: 118 msec
 ;; SERVER: 100.0.0.20#53(100.0.0.20)
-;; WHEN: Thu Apr 18 19:48:59 CEST 2019
+;; WHEN: Thu Apr 18 20:47:13 CEST 2019
 ;; MSG SIZE  rcvd: 42
 
 
 ; <<>> DiG 9.9.5-3ubuntu0.2-Ubuntu <<>> ws2.ik2220.com @100.0.0.21
 ;; global options: +cmd
 ;; Got answer:
-;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 33178
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 46736
 ;; flags: qr; QUERY: 0, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 0
 
 ;; ANSWER SECTION:
 ws2.ik2220.com.		1234	IN	A	100.0.0.41
 
-;; Query time: 124 msec
+;; Query time: 581 msec
 ;; SERVER: 100.0.0.21#53(100.0.0.21)
-;; WHEN: Thu Apr 18 19:48:59 CEST 2019
+;; WHEN: Thu Apr 18 20:47:14 CEST 2019
 ;; MSG SIZE  rcvd: 42
 
 
 ; <<>> DiG 9.9.5-3ubuntu0.2-Ubuntu <<>> ws3.ik2220.com @100.0.0.22
 ;; global options: +cmd
 ;; Got answer:
-;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 26442
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 53963
 ;; flags: qr; QUERY: 0, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 0
 
 ;; ANSWER SECTION:
 ws3.ik2220.com.		1234	IN	A	100.0.0.42
 
-;; Query time: 73 msec
+;; Query time: 113 msec
 ;; SERVER: 100.0.0.22#53(100.0.0.22)
-;; WHEN: Thu Apr 18 19:48:59 CEST 2019
+;; WHEN: Thu Apr 18 20:47:14 CEST 2019
 ;; MSG SIZE  rcvd: 42
 
 ------------------------------------------------------------------------------
-Testing dig_test_69.cmd: 2019-04-18 19:49:09 
+Testing dig_test_69.cmd: 2019-04-18 20:47:24 
 
 ; <<>> DiG 9.9.5-3ubuntu0.2-Ubuntu <<>> ws1.ik2220.com @100.0.0.20 -p 69
 ;; global options: +cmd
@@ -197,7 +155,7 @@ Testing dig_test_69.cmd: 2019-04-18 19:49:09
 ;; global options: +cmd
 ;; connection timed out; no servers could be reached
 ------------------------------------------------------------------------------
-Testing dmz_port_scan.cmd: 2019-04-18 19:50:05 
+Testing dmz_port_scan.cmd: 2019-04-18 20:48:19 
 nc: connect to 100.0.0.22 port 80 (tcp) failed: Connection refused
 nc: connect to 100.0.0.22 port 53 (tcp) failed: Connection refused
 nc: connect to 100.0.0.22 port 443 (tcp) failed: Connection refused
@@ -219,7 +177,7 @@ nc: connect to 100.0.0.42 port 636 (tcp) failed: Connection refused
 nc: connect to 100.0.0.42 port 161 (tcp) failed: Connection refused
 nc: connect to 100.0.0.42 port 989 (tcp) failed: Connection refused
 ------------------------------------------------------------------------------
-Testing pbz_port_scan.cmd: 2019-04-18 19:50:16 
+Testing pbz_port_scan.cmd: 2019-04-18 20:48:29 
 nc: connect to 100.0.0.21 port 80 (tcp) timed out: Operation now in progress
 nc: connect to 100.0.0.21 port 53 (tcp) failed: Connection refused
 nc: connect to 100.0.0.21 port 443 (tcp) timed out: Operation now in progress
@@ -241,7 +199,7 @@ nc: connect to 100.0.0.41 port 636 (tcp) timed out: Operation now in progress
 nc: connect to 100.0.0.41 port 161 (tcp) timed out: Operation now in progress
 nc: connect to 100.0.0.41 port 989 (tcp) timed out: Operation now in progress
 ------------------------------------------------------------------------------
-Testing ping_all.cmd: 2019-04-18 19:51:02 
+Testing ping_all.cmd: 2019-04-18 20:49:16 
 *** Ping: testing ping reachability
 ds1 -> ds2 ds3 h1 h2 X X insp ws1 ws2 ws3 
 ds2 -> ds1 ds3 h1 h2 X X insp ws1 ws2 ws3 
@@ -256,7 +214,7 @@ ws2 -> ds1 ds2 ds3 h1 h2 X X insp ws1 ws3
 ws3 -> ds1 ds2 ds3 h1 h2 X X insp ws1 ws2 
 *** Results: 41% dropped (64/110 received)
 ------------------------------------------------------------------------------
-Testing prz_port_scan.cmd: 2019-04-18 19:58:58 
+Testing prz_port_scan.cmd: 2019-04-18 20:57:11 
 nc: connect to 100.0.0.20 port 80 (tcp) timed out: Operation now in progress
 nc: connect to 100.0.0.20 port 53 (tcp) failed: Connection refused
 nc: connect to 100.0.0.20 port 443 (tcp) timed out: Operation now in progress

@@ -3,39 +3,33 @@ INFO:openflow.of_01:[None 1] closed
 INFO:openflow.of_01:[00-00-00-00-00-01 2] connected
 INFO:openflow.of_01:[00-00-00-00-00-02 3] connected
 INFO:openflow.of_01:[00-00-00-00-00-06 4] connected
-INFO:openflow.of_01:[00-00-00-00-00-05 6] connected
 INFO:openflow.of_01:[00-00-00-00-00-04 5] connected
+WARNING:openflow.of_01:<class 'pox.openflow.PacketIn'> raised on dummy OpenFlow nexus
+INFO:openflow.of_01:[00-00-00-00-00-05 6] connected
 INFO:openflow.of_01:[00-00-00-00-00-03 7] connected
-INFO:openflow.of_01:[00-00-00-00-00-07 8] connected
 INFO:openflow.of_01:[00-00-00-00-00-09 9] connected
-WARNING:openflow.of_01:<class 'pox.openflow.PortStatus'> raised on dummy OpenFlow nexus
+INFO:openflow.of_01:[00-00-00-00-00-07 8] connected
 INFO:openflow.of_01:[00-00-00-00-00-08 10] connected
 INFO:openflow.of_01:[00-00-00-00-00-0b 11] connected
 INFO:openflow.of_01:[00-00-00-00-00-0a 12] connected
 INFO:application.firewall:rule matched: ('*', '100.0.0.40/30', 6, 80, True)
-INFO:application.firewall:connection: ('100.0.0.12', '100.0.0.40', 6, (40637, 80))
-INFO:application.firewall:rule matched: ('100.0.0.52/32', '100.0.0.40/30', 6, 80, True)
-INFO:application.firewall:connection: ('100.0.0.52', '100.0.0.41', 6, (47182, 80))
-INFO:application.firewall:rule matched: ('*', '100.0.0.40/30', 6, 80, True)
-INFO:application.firewall:connection: ('100.0.0.11', '100.0.0.40', 6, (48651, 80))
+INFO:application.firewall:connection: ('100.0.0.11', '100.0.0.40', 6, (49017, 80))
 INFO:application.firewall:rule matched: ('100.0.0.51/32', '100.0.0.40/30', 6, 80, True)
-INFO:application.firewall:connection: ('100.0.0.51', '100.0.0.41', 6, (46522, 80))
+INFO:application.firewall:connection: ('100.0.0.51', '100.0.0.41', 6, (46888, 80))
 INFO:application.firewall:rule matched: ('*', '100.0.0.40/30', 6, 80, True)
-INFO:application.firewall:connection: ('100.0.0.11', '100.0.0.40', 6, (48654, 80))
+INFO:application.firewall:connection: ('100.0.0.11', '100.0.0.40', 6, (49020, 80))
 INFO:application.firewall:rule matched: ('100.0.0.51/32', '100.0.0.40/30', 6, 80, True)
-INFO:application.firewall:connection: ('100.0.0.51', '100.0.0.41', 6, (46525, 80))
+INFO:application.firewall:connection: ('100.0.0.51', '100.0.0.41', 6, (46891, 80))
 INFO:application.firewall:rule matched: ('*', '100.0.0.20/30', 17, 53, True)
-INFO:application.firewall:connection: ('100.0.0.11', '100.0.0.20', 17, (44344, 53))
+INFO:application.firewall:connection: ('100.0.0.11', '100.0.0.20', 17, (52492, 53))
 INFO:application.firewall:rule matched: ('100.0.0.51/32', '100.0.0.20/30', 17, 53, True)
-INFO:application.firewall:connection: ('100.0.0.51', '100.0.0.21', 17, (33897, 53))
+INFO:application.firewall:connection: ('100.0.0.51', '100.0.0.21', 17, (41729, 53))
 INFO:application.firewall:rule matched: ('*', '100.0.0.40/30', 6, 80, True)
-INFO:application.firewall:connection: ('100.0.0.12', '100.0.0.40', 6, (40637, 80))
-INFO:application.firewall:rule matched: ('100.0.0.52/32', '100.0.0.40/30', 6, 80, True)
-INFO:application.firewall:connection: ('100.0.0.52', '100.0.0.41', 6, (47182, 80))
+INFO:application.firewall:connection: ('100.0.0.11', '100.0.0.40', 6, (49017, 80))
 INFO:application.firewall:rule matched: ('*', '100.0.0.20/30', 6, 53, True)
-INFO:application.firewall:connection: ('100.0.0.12', '100.0.0.21', 6, (48084, 53))
+INFO:application.firewall:connection: ('100.0.0.12', '100.0.0.21', 6, (48450, 53))
 INFO:application.firewall:rule matched: ('*', '100.0.0.40/30', 6, 80, True)
-INFO:application.firewall:connection: ('100.0.0.12', '100.0.0.41', 6, (49857, 80))
+INFO:application.firewall:connection: ('100.0.0.12', '100.0.0.41', 6, (50223, 80))
 INFO:application.firewall:rule matched: ('*', '100.0.0.11/32', 1, '*', True)
 INFO:application.firewall:connection: ('100.0.0.20', '100.0.0.11', 1, ('*', '*'))
 INFO:application.firewall:rule matched: ('*', '100.0.0.12/32', 1, '*', True)
@@ -48,8 +42,6 @@ INFO:application.firewall:rule matched: ('*', '100.0.0.11/32', 1, '*', True)
 INFO:application.firewall:connection: ('100.0.0.22', '100.0.0.11', 1, ('*', '*'))
 INFO:application.firewall:rule matched: ('*', '100.0.0.12/32', 1, '*', True)
 INFO:application.firewall:connection: ('100.0.0.22', '100.0.0.12', 1, ('*', '*'))
-INFO:application.firewall:rule matched: ('*', '100.0.0.40/30', 6, 80, True)
-INFO:application.firewall:connection: ('100.0.0.12', '100.0.0.41', 6, (49857, 80))
 INFO:application.firewall:rule matched: ('100.0.0.51/32', '100.0.0.11/32', 1, '*', True)
 INFO:application.firewall:connection: ('100.0.0.51', '100.0.0.11', 1, ('*', '*'))
 INFO:application.firewall:rule matched: ('*', '100.0.0.11/32', 1, '*', True)
@@ -83,9 +75,9 @@ INFO:application.firewall:connection: ('100.0.0.42', '100.0.0.11', 1, ('*', '*')
 INFO:application.firewall:rule matched: ('*', '100.0.0.12/32', 1, '*', True)
 INFO:application.firewall:connection: ('100.0.0.42', '100.0.0.12', 1, ('*', '*'))
 INFO:application.firewall:rule matched: ('100.0.0.52/32', '100.0.0.20/30', 6, 53, True)
-INFO:application.firewall:connection: ('100.0.0.52', '100.0.0.20', 6, (60309, 53))
+INFO:application.firewall:connection: ('100.0.0.52', '100.0.0.20', 6, (60675, 53))
 INFO:application.firewall:rule matched: ('100.0.0.52/32', '100.0.0.40/30', 6, 80, True)
-INFO:application.firewall:connection: ('100.0.0.52', '100.0.0.40', 6, (36606, 80))
+INFO:application.firewall:connection: ('100.0.0.52', '100.0.0.40', 6, (36972, 80))
 INFO:openflow.of_01:[00-00-00-00-00-07 8] closed
 INFO:openflow.of_01:[00-00-00-00-00-02 3] closed
 INFO:openflow.of_01:[00-00-00-00-00-0b 11] closed
@@ -97,4 +89,4 @@ INFO:openflow.of_01:[00-00-00-00-00-01 2] closed
 INFO:openflow.of_01:[00-00-00-00-00-0a 12] closed
 INFO:openflow.of_01:[00-00-00-00-00-05 6] closed
 INFO:openflow.of_01:[00-00-00-00-00-06 4] closed
-/home/click/Git/sdn/ik2220-assign-phase1-team10/test/run_pox.sh: line 22:  6139 Terminated              python pox.py application
+/home/click/Git/sdn/ik2220-assign-phase1-team10/test/run_pox.sh: line 22: 25855 Terminated              python pox.py application
