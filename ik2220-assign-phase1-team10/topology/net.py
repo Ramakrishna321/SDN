@@ -1,6 +1,7 @@
 ''' IK2220 Main Mininet network simulation '''
 import sys
 import time
+from datetime import datetime
 
 from config import NODEDEFS as cfg
 from topobuilder import TopoBuilder
@@ -34,6 +35,8 @@ NET = Mininet(topo=TOPO,
 
 NET.start()
 
+
+#Define the Web Server nodes, start the servers
 WS1 = NET.get('ws1')
 WS1.cmd('python services/webserver.py &')
 
@@ -43,6 +46,7 @@ WS2.cmd('python services/webserver.py &')
 WS3 = NET.get('ws3')
 WS3.cmd('python services/webserver.py &')
 
+#Define the Name Server nodes, start the servers
 DS1 = NET.get('ds1')
 DS1.cmd('python services/dns.py %s %s &' % (DS1.IP(), DS1.intfNames()[0]))
 
@@ -52,6 +56,7 @@ DS2.cmd('python services/dns.py %s %s &' % (DS2.IP(), DS2.intfNames()[0]))
 DS3 = NET.get('ds3')
 DS3.cmd('python services/dns.py %s %s &' % (DS3.IP(), DS3.intfNames()[0]))
 
+#Define the user nodes
 H1 = NET.get('h1')
 H2 = NET.get('h2')
 H3 = NET.get('h3')
@@ -59,11 +64,19 @@ H4 = NET.get('h4')
 
 INSP = NET.get('insp')
 
-script = None
+#Run script to test the topo, tests are defined in script
 if len(sys.argv) > 1:
-    script = sys.argv[1]
+    scripts = sys.argv[1:]
     output("STARTING IN TEST MODE\n")
-    output("*** waiting for nodes to come up ***\n")
+    output("Wait for 10 seconds for nodes to come up:\n")
     time.sleep(10)
-
-CLI(NET, script=script)
+    output("Begin Tests:\n")
+    for script in scripts:
+        start = datetime.now().replace(microsecond=0).isoformat(" ")
+        name = script.split('/')[-1]
+        output("Testing %s: %s \n"% (name, start))
+        CLI(NET, script=script)
+        time.sleep(10)
+        output("------------------------------------------------------------------------------\n")
+else:
+    CLI(NET)

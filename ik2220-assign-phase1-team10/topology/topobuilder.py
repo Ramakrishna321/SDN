@@ -23,6 +23,7 @@ class TopoBuilder(object):
         self.nodes = defaultdict(dict)
 
         for nodedef in topology:
+		# Load topology and check for duplicates
             name = nodedef.get('name')
             if not name:
                 raise ValueError('`name` not specified')

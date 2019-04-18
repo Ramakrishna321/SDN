@@ -1,5 +1,19 @@
 ''' IK2220 SDN Phase 1 Topology Configuration '''
 
+# Defining the nodes and switches based on the network layout in the project 
+# description.
+#
+# Fields of NODEDEFS:
+# - name : name of the node shown in the network layout
+# - type : node type to construct [HOST , SWITCH]
+# - ip   : [optional field present in HOST] ip address of the HOST
+# - links: [optional field present in SWITCH] links to generate between nodes
+# - mode : [optional field present in SWITCH defined for FIREWALL] overwrite 
+#           functionality for SWITCH 
+# - dpid : [optional field present in SWITCH mandatory if mode defined] OpenFlow
+#           Switch identifier, auto-gen unless defined
+# - config: [mandatory field present in Switch if mode is defined] configuration
+#           for specific modes 
 NODEDEFS = [
     {
         'name':'h1',
