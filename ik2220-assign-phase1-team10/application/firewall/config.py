@@ -1,4 +1,4 @@
-''' Default firewall rules '''
+''' IK2220 SDN Phase 1 Firewall Rules '''
 
 from pox.lib.packet.ipv4 import ipv4
 

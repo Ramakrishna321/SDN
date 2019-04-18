@@ -1,4 +1,4 @@
-''' WIP Firewall '''
+''' IK2220 SDN Phase 1 Firewall '''
 
 from pox.forwarding.l2_learning import LearningSwitch
 from pox.lib.packet.ipv4 import ipv4
@@ -12,6 +12,10 @@ from . import config as cfg
 LOG = core.getLogger()
 
 class Firewall(LearningSwitch):
+    '''
+    L2 Learning Switch extended with Firewall 
+    capabilities.
+    '''
     IDLE_TIMEOUT = 30
     HARD_TIMEOUT = 60
     slots = ('rules', 'active_conns')
@@ -25,6 +29,7 @@ class Firewall(LearningSwitch):
         LearningSwitch.__init__(self, conn, False)
 
     def rm_conn(self, active):
+        '''Remove connection after timeout'''
         try:
             timer = self.active_conns.pop(active)
             timer.cancel()
@@ -37,6 +42,7 @@ class Firewall(LearningSwitch):
 
 
     def timed_msg(self, match, port):
+        ''' Creates a ofp flow mod message with timeout. '''
         msg = of.ofp_flow_mod()
         msg.match = match
         msg.idle_timeout = Firewall.IDLE_TIMEOUT
@@ -45,6 +51,8 @@ class Firewall(LearningSwitch):
         self.connection.send(msg)
 
     def drop_msg(self, event):
+        ''' Creates an ofp flow mod message for packets to 
+        be dropped. '''
         pkt = event.parsed
         msg = of.ofp_flow_mod()
         msg.match = of.ofp_match.from_packet(pkt)
@@ -53,6 +61,7 @@ class Firewall(LearningSwitch):
         self.connection.send(msg)
 
     def is_active(self, conn):
+        ''' Checks if response arrived before timeout'''
         try:
             timer = self.active_conns.pop(conn)
             timer.cancel()
@@ -61,6 +70,10 @@ class Firewall(LearningSwitch):
             return False
 
     def match_event(self, event):
+        '''
+        Check packet header against firewall rules
+        '''
+        # Disecting the packet
         pkt = event.parsed
         ip_pkt = pkt.find('ipv4')
         if not ip_pkt:
@@ -81,11 +94,12 @@ class Firewall(LearningSwitch):
         src_str = src.toStr()
         dst_str = dst.toStr()
         conn = (src_str, dst_str, proto, ports)
+        # Check if packet is a response
         if self.is_active(conn):
             match = of.ofp_match.from_packet(pkt)
             self.timed_msg(match, event.ofp.in_port)
             return True
-
+        # Match against rules
         for (sip, dip, prot, dport, allow) in self.rules:
             if sip != '*' and not src.inNetwork(sip):
                 continue
@@ -113,4 +127,4 @@ class Firewall(LearningSwitch):
     def _handle_PacketIn(self, event):
         matched = self.match_event(event)
         if matched:
-            LearningSwitch._handle_PacketIn(self, event)
+            LearningSwitch._handle_PacketIn(self, event) 

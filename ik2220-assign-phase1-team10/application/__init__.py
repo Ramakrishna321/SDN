@@ -3,5 +3,6 @@
 from pox.core import core
 from controller import Controller
 
+# Pox entry point
 def launch():
     core.registerNew(Controller)
