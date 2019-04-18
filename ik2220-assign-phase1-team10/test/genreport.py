@@ -8,7 +8,7 @@ def writeheader(report):
     report.write('IK2220 Phase 1. Report\n')
     report.write('==============================================================================\n')
     report.write('\n')
-    report.write('Date: %s\n' % datetime.now().isoformat(' ', timespec='seconds'))
+    report.write('Date: %s\n' % datetime.now().isoformat(' '))
     report.write('\n')
     report.write('Team 10 members:\n')
     report.write('\tRoland Kovács\n')
