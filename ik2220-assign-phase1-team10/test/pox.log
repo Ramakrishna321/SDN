@@ -1,0 +1,133 @@
+INFO:core:POX 0.2.0 (carp) is up.
+INFO:openflow.of_01:[None 1] closed
+INFO:openflow.of_01:[00-00-00-00-00-02 3] connected
+INFO:openflow.of_01:[00-00-00-00-00-01 2] connected
+INFO:openflow.of_01:[00-00-00-00-00-06 4] connected
+WARNING:openflow.of_01:<class 'pox.openflow.PacketIn'> raised on dummy OpenFlow nexus
+INFO:openflow.of_01:[00-00-00-00-00-04 5] connected
+INFO:openflow.of_01:[None 7] disconnected
+INFO:openflow.of_01:[00-00-00-00-00-05 6] connected
+INFO:openflow.of_01:[None 7] closed
+INFO:openflow.of_01:[00-00-00-00-00-07 8] connected
+INFO:openflow.of_01:[00-00-00-00-00-09 9] connected
+INFO:openflow.of_01:[00-00-00-00-00-08 10] connected
+INFO:openflow.of_01:[00-00-00-00-00-0b 11] connected
+INFO:openflow.of_01:[00-00-00-00-00-0a 12] connected
+INFO:openflow.of_01:[00-00-00-00-00-03 13] connected
+INFO:application.firewall:rule matched: ('*', '100.0.0.40/30', 6, 80, True)
+INFO:application.firewall:connection: ('100.0.0.11', '100.0.0.40', 6, (48082, 80))
+INFO:application.firewall:rule matched: ('100.0.0.51/32', '100.0.0.40/30', 6, 80, True)
+INFO:application.firewall:connection: ('100.0.0.51', '100.0.0.41', 6, (45953, 80))
+INFO:application.firewall:rule matched: ('*', '100.0.0.40/30', 6, 80, True)
+INFO:application.firewall:connection: ('100.0.0.11', '100.0.0.40', 6, (48085, 80))
+INFO:application.firewall:rule matched: ('100.0.0.51/32', '100.0.0.40/30', 6, 80, True)
+INFO:application.firewall:connection: ('100.0.0.51', '100.0.0.41', 6, (45956, 80))
+INFO:application.firewall:rule matched: ('*', '100.0.0.20/30', 17, 53, True)
+INFO:application.firewall:connection: ('100.0.0.11', '100.0.0.20', 17, (52423, 53))
+INFO:application.firewall:rule matched: ('100.0.0.51/32', '100.0.0.20/30', 17, 53, True)
+INFO:application.firewall:connection: ('100.0.0.51', '100.0.0.21', 17, (60476, 53))
+INFO:packet:(dns) packet data too short to parse header: data len 1
+INFO:packet:(dns) packet data too short to parse header: data len 1
+INFO:packet:(dns) packet data too short to parse header: data len 1
+INFO:packet:(dns) packet data too short to parse header: data len 1
+INFO:packet:(dns) packet data too short to parse header: data len 1
+INFO:packet:(dns) packet data too short to parse header: data len 1
+INFO:packet:(dns) packet data too short to parse header: data len 1
+INFO:packet:(dns) packet data too short to parse header: data len 1
+INFO:packet:(dns) packet data too short to parse header: data len 1
+INFO:packet:(dns) packet data too short to parse header: data len 1
+INFO:application.firewall:rule matched: ('*', '100.0.0.20/30', 17, 53, True)
+INFO:application.firewall:connection: ('100.0.0.12', '100.0.0.21', 17, (36743, 53))
+INFO:packet:(dns) packet data too short to parse header: data len 1
+INFO:application.firewall:rule matched: ('*', '100.0.0.20/30', 17, 53, True)
+INFO:application.firewall:connection: ('100.0.0.12', '100.0.0.21', 17, (36743, 53))
+INFO:packet:(dns) packet data too short to parse header: data len 1
+INFO:packet:(dns) packet data too short to parse header: data len 1
+INFO:packet:(dns) packet data too short to parse header: data len 1
+INFO:packet:(dns) packet data too short to parse header: data len 1
+INFO:packet:(dns) packet data too short to parse header: data len 1
+INFO:packet:(dns) packet data too short to parse header: data len 1
+INFO:application.firewall:rule matched: ('*', '100.0.0.40/30', 6, 80, True)
+INFO:application.firewall:connection: ('100.0.0.11', '100.0.0.40', 6, (48082, 80))
+INFO:packet:(dns) packet data too short to parse header: data len 1
+INFO:packet:(dns) packet data too short to parse header: data len 1
+INFO:application.firewall:rule matched: ('*', '100.0.0.20/30', 6, 53, True)
+INFO:application.firewall:connection: ('100.0.0.12', '100.0.0.21', 6, (47505, 53))
+INFO:application.firewall:rule matched: ('*', '100.0.0.11/32', 1, '*', True)
+INFO:application.firewall:connection: ('100.0.0.20', '100.0.0.11', 1, ('*', '*'))
+INFO:application.firewall:rule matched: ('*', '100.0.0.12/32', 1, '*', True)
+INFO:application.firewall:connection: ('100.0.0.20', '100.0.0.12', 1, ('*', '*'))
+INFO:application.firewall:rule matched: ('*', '100.0.0.11/32', 1, '*', True)
+INFO:application.firewall:connection: ('100.0.0.21', '100.0.0.11', 1, ('*', '*'))
+INFO:application.firewall:rule matched: ('*', '100.0.0.12/32', 1, '*', True)
+INFO:application.firewall:connection: ('100.0.0.21', '100.0.0.12', 1, ('*', '*'))
+INFO:application.firewall:rule matched: ('*', '100.0.0.11/32', 1, '*', True)
+INFO:application.firewall:connection: ('100.0.0.22', '100.0.0.11', 1, ('*', '*'))
+INFO:application.firewall:rule matched: ('*', '100.0.0.12/32', 1, '*', True)
+INFO:application.firewall:connection: ('100.0.0.22', '100.0.0.12', 1, ('*', '*'))
+INFO:application.firewall:rule matched: ('100.0.0.51/32', '100.0.0.11/32', 1, '*', True)
+INFO:application.firewall:connection: ('100.0.0.51', '100.0.0.11', 1, ('*', '*'))
+INFO:application.firewall:rule matched: ('*', '100.0.0.11/32', 1, '*', True)
+INFO:application.firewall:connection: ('100.0.0.51', '100.0.0.11', 1, ('*', '*'))
+INFO:application.firewall:rule matched: ('100.0.0.51/32', '100.0.0.12/32', 1, '*', True)
+INFO:application.firewall:connection: ('100.0.0.51', '100.0.0.12', 1, ('*', '*'))
+INFO:application.firewall:rule matched: ('*', '100.0.0.12/32', 1, '*', True)
+INFO:application.firewall:connection: ('100.0.0.51', '100.0.0.12', 1, ('*', '*'))
+INFO:application.firewall:rule matched: ('100.0.0.52/32', '100.0.0.11/32', 1, '*', True)
+INFO:application.firewall:connection: ('100.0.0.52', '100.0.0.11', 1, ('*', '*'))
+INFO:application.firewall:rule matched: ('*', '100.0.0.11/32', 1, '*', True)
+INFO:application.firewall:connection: ('100.0.0.52', '100.0.0.11', 1, ('*', '*'))
+INFO:application.firewall:rule matched: ('100.0.0.52/32', '100.0.0.12/32', 1, '*', True)
+INFO:application.firewall:connection: ('100.0.0.52', '100.0.0.12', 1, ('*', '*'))
+INFO:application.firewall:rule matched: ('*', '100.0.0.12/32', 1, '*', True)
+INFO:application.firewall:connection: ('100.0.0.52', '100.0.0.12', 1, ('*', '*'))
+INFO:application.firewall:rule matched: ('*', '100.0.0.11/32', 1, '*', True)
+INFO:application.firewall:connection: ('100.0.0.30', '100.0.0.11', 1, ('*', '*'))
+INFO:application.firewall:rule matched: ('*', '100.0.0.12/32', 1, '*', True)
+INFO:application.firewall:connection: ('100.0.0.30', '100.0.0.12', 1, ('*', '*'))
+INFO:application.firewall:rule matched: ('*', '100.0.0.11/32', 1, '*', True)
+INFO:application.firewall:connection: ('100.0.0.40', '100.0.0.11', 1, ('*', '*'))
+INFO:application.firewall:rule matched: ('*', '100.0.0.12/32', 1, '*', True)
+INFO:application.firewall:connection: ('100.0.0.40', '100.0.0.12', 1, ('*', '*'))
+INFO:application.firewall:rule matched: ('*', '100.0.0.11/32', 1, '*', True)
+INFO:application.firewall:connection: ('100.0.0.41', '100.0.0.11', 1, ('*', '*'))
+INFO:application.firewall:rule matched: ('*', '100.0.0.12/32', 1, '*', True)
+INFO:application.firewall:connection: ('100.0.0.41', '100.0.0.12', 1, ('*', '*'))
+INFO:application.firewall:rule matched: ('*', '100.0.0.11/32', 1, '*', True)
+INFO:application.firewall:connection: ('100.0.0.42', '100.0.0.11', 1, ('*', '*'))
+INFO:application.firewall:rule matched: ('*', '100.0.0.12/32', 1, '*', True)
+INFO:application.firewall:connection: ('100.0.0.42', '100.0.0.12', 1, ('*', '*'))
+INFO:packet:(dns) packet data too short to parse header: data len 1
+INFO:packet:(dns) packet data too short to parse header: data len 1
+INFO:packet:(dns) packet data too short to parse header: data len 1
+INFO:packet:(dns) packet data too short to parse header: data len 1
+INFO:packet:(dns) packet data too short to parse header: data len 1
+INFO:application.firewall:rule matched: ('100.0.0.52/32', '100.0.0.20/30', 17, 53, True)
+INFO:application.firewall:connection: ('100.0.0.52', '100.0.0.20', 17, (32943, 53))
+INFO:packet:(dns) packet data too short to parse header: data len 1
+INFO:application.firewall:rule matched: ('100.0.0.52/32', '100.0.0.20/30', 17, 53, True)
+INFO:application.firewall:connection: ('100.0.0.52', '100.0.0.20', 17, (32943, 53))
+INFO:packet:(dns) packet data too short to parse header: data len 1
+INFO:packet:(dns) packet data too short to parse header: data len 1
+INFO:packet:(dns) packet data too short to parse header: data len 1
+INFO:packet:(dns) packet data too short to parse header: data len 1
+INFO:packet:(dns) packet data too short to parse header: data len 1
+INFO:packet:(dns) packet data too short to parse header: data len 1
+INFO:packet:(dns) packet data too short to parse header: data len 1
+INFO:packet:(dns) packet data too short to parse header: data len 1
+INFO:packet:(dns) packet data too short to parse header: data len 1
+INFO:packet:(dns) packet data too short to parse header: data len 1
+INFO:application.firewall:rule matched: ('100.0.0.52/32', '100.0.0.20/30', 6, 53, True)
+INFO:application.firewall:connection: ('100.0.0.52', '100.0.0.20', 6, (59720, 53))
+INFO:openflow.of_01:[00-00-00-00-00-07 8] closed
+INFO:openflow.of_01:[00-00-00-00-00-02 3] closed
+INFO:openflow.of_01:[00-00-00-00-00-0b 11] closed
+INFO:openflow.of_01:[00-00-00-00-00-09 9] closed
+INFO:openflow.of_01:[00-00-00-00-00-03 13] closed
+INFO:openflow.of_01:[00-00-00-00-00-08 10] closed
+INFO:openflow.of_01:[00-00-00-00-00-04 5] closed
+INFO:openflow.of_01:[00-00-00-00-00-01 2] closed
+INFO:openflow.of_01:[00-00-00-00-00-0a 12] closed
+INFO:openflow.of_01:[00-00-00-00-00-05 6] closed
+INFO:openflow.of_01:[00-00-00-00-00-06 4] closed
+/home/click/Git/sdn/ik2220-assign-phase1-team10/test/run_pox.sh: line 22:  4348 Terminated              python pox.py application
