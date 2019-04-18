@@ -76,6 +76,7 @@ if len(sys.argv) > 1:
         name = script.split('/')[-1]
         output("Testing %s: %s \n"% (name, start))
         CLI(NET, script=script)
+        time.sleep(10)
         output("------------------------------------------------------------------------------\n")
 else:
     CLI(NET)
