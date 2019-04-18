@@ -42,10 +42,12 @@ app:
 	@echo "-------------------------"
 	@bash test/run_pox.sh
 
-test:
+test: clean
+	@echo ""
 	@echo "-------------------------"
 	@echo "Starting Tests           "
 	@echo "-------------------------"
 	chmod +x ${SRCTOP}/test/*.sh
 	bash ${SRCTOP}/test/runall.sh
+	@echo ""
 	${MAKE} clean
