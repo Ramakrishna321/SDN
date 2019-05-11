@@ -42,7 +42,8 @@ app:
 	@echo "-------------------------"
 	@bash test/run_pox.sh
 
-test: clean
+#test: clean
+test:
 	@echo ""
 	@echo "-------------------------"
 	@echo "Starting Tests           "
