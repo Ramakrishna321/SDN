@@ -44,6 +44,10 @@ class Controller(object):
             if mode and config and dpid:
                 dpid = Controller.to_pox_dpid(dpid)
                 self.switches[dpid] = {'mode': mode, 'config': config}
+            elif mode and dpid:
+                dpid = Controller.to_pox_dpid(dpid)
+                self.switches[dpid] = {'mode': mode}
+                print('NFV step 1')
         core.openflow.addListeners(self)
 
     def _handle_ConnectionUp(self, event):
@@ -59,5 +63,7 @@ class Controller(object):
         if conf and type(conf) == dict:
             if conf['mode'] == 'FIREWALL':
                 self.switches[dpid] = Firewall(event.connection, conf['config'], dpid)
+            if conf['mode'] == 'NFV':
+                print('DO Nothing as NFV')
         else:
             self.switches[dpid] = LearningSwitch(event.connection, False)
