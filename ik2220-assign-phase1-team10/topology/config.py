@@ -143,6 +143,8 @@ NODEDEFS = [
     {
         'name':'lb1',
         'type':'SWITCH',
+        'dpid':'0000000000000003',
+        'mode':'NFV',
         'links':{
             'sw2',
             'sw3',
@@ -151,6 +153,8 @@ NODEDEFS = [
     {
         'name':'lb2',
         'type':'SWITCH',
+        'dpid':'0000000000000004',
+        'mode':'NFV',
         'links':{
             'ids',
             'sw4',
@@ -159,6 +163,8 @@ NODEDEFS = [
     {
         'name':'napt',
         'type':'SWITCH',
+        'dpid':'0000000000000005',
+        'mode':'NFV',
         'links':{
             'fw2',
             'sw5',
@@ -167,6 +173,8 @@ NODEDEFS = [
     {
         'name':'ids',
         'type':'SWITCH',
+        'dpid':'0000000000000006',
+        'mode':'NFV',
         'links':{
             'sw2',
             'insp',
