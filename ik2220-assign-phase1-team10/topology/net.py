@@ -28,13 +28,28 @@ CTRL = RemoteController('c0', ip='127.0.0.1', port=6633)
 NET = Mininet(topo=TOPO,
               switch=OVSSwitch,
               controller=CTRL,
-              autoSetMacs=True,
+              autoSetMacs=False,
               autoStaticArp=True,
               build=True,
               cleanup=True)
 
 NET.start()
+#Setting the IP Addresses of NFVs
+LB1 = NET.get('lb1')
+LB1.setMAC('00:00:00:00:00:10',intf ='lb1-eth1' )	
+LB1.setMAC('00:00:00:00:00:11',intf ='lb1-eth2' )
 
+LB2 = NET.get('lb2')
+LB2.setMAC('00:00:00:00:00:12',intf ='lb2-eth1' )	
+LB2.setMAC('00:00:00:00:00:13',intf ='lb2-eth2' )
+
+IDS = NET.get('ids')
+IDS.setMAC('00:00:00:00:00:14',intf ='ids-eth1' )	
+IDS.setMAC('00:00:00:00:00:15',intf ='ids-eth2' )
+
+NAPT = NET.get('napt')
+NAPT.setMAC('00:00:00:00:00:16',intf ='napt-eth1' )	
+NAPT.setMAC('00:00:00:00:00:17',intf ='napt-eth2' ) 
 
 #Define the Web Server nodes, start the servers
 WS1 = NET.get('ws1')

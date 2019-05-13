@@ -70,8 +70,9 @@ class TopoBuilder(object):
             typ = node.get('type')
             # add matching node types
             if typ == 'HOST':
+                mac = node.get('MAC')
                 ip = node.get('ip')
-                impl.addHost(name, ip=ip)
+                impl.addHost(name, ip=ip, mac=mac)
             elif typ in ('SWITCH', 'FIREWALL'):
                 links = node.get('links')
                 if not links:
@@ -83,7 +84,7 @@ class TopoBuilder(object):
                 dpid = node.get('dpid')
                 if not dpid:
                     dpid = self.__gen_dpid()
-                impl.addSwitch(name, dpid=dpid)
+                impl.addSwitch(name, dpid=dpid)             
             else:
                 raise ValueError('unknown `type`: %s' % typ)
         # set up links
