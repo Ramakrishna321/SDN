@@ -59,8 +59,12 @@ DS3.cmd('python services/dns.py %s %s &' % (DS3.IP(), DS3.intfNames()[0]))
 #Define the user nodes
 H1 = NET.get('h1')
 H2 = NET.get('h2')
+
 H3 = NET.get('h3')
+H3.cmd('route add default gw 10.0.0.1')
+
 H4 = NET.get('h4')
+H4.cmd('route add default gw 10.0.0.1')
 
 INSP = NET.get('insp')
 
