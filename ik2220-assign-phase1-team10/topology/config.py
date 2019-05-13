@@ -58,12 +58,12 @@ NODEDEFS = [
     {
         'name':'h3',
         'type':'HOST',
-        'ip':'100.0.0.51/24'
+        'ip':'10.0.0.51/24'
     },
     {
         'name':'h4',
         'type':'HOST',
-        'ip':'100.0.0.52/24'
+        'ip':'10.0.0.52/24'
     },
     {
         'name':'insp',
@@ -143,8 +143,8 @@ NODEDEFS = [
     {
         'name':'lb1',
         'type':'SWITCH',
-        'dpid':'0000000000000003',
-        'mode':'NFV',
+#        'dpid':'0000000000000003',
+#        'mode':'NFV',
         'links':{
             'sw2',
             'sw3',
@@ -153,8 +153,8 @@ NODEDEFS = [
     {
         'name':'lb2',
         'type':'SWITCH',
-        'dpid':'0000000000000004',
-        'mode':'NFV',
+#        'dpid':'0000000000000004',
+#        'mode':'NFV',
         'links':{
             'ids',
             'sw4',
@@ -173,8 +173,8 @@ NODEDEFS = [
     {
         'name':'ids',
         'type':'SWITCH',
-        'dpid':'0000000000000006',
-        'mode':'NFV',
+#        'dpid':'0000000000000006',
+#        'mode':'NFV',
         'links':{
             'sw2',
             'insp',
