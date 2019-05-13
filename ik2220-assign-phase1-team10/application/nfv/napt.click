@@ -1,6 +1,6 @@
 AddressInfo(
-	inface	10.0.0.1	10.0.0.0/24		8e-fe-d5-fe-c0-d7,
-	outface	100.0.0.1	100.0.0.0/24	8e-2e-1f-7f-1a-17,
+	inface	10.0.0.1	10.0.0.0/24		00-00-00-00-00-17,
+	outface	100.0.0.1	100.0.0.0/24	00-00-00-00-00-16,
 );
 
 
@@ -13,9 +13,9 @@ elementclass ArpIpClassifier { |
 		-,
 	);
 
-	cls[0] -> [0]output;
-	cls[1] -> [1]output;
-	cls[2] -> [2]output;
+	cls[0] -> [0]output; // ARP-REQ
+	cls[1] -> [1]output; // ARP-REP
+	cls[2] -> [2]output; // IP
 	cls[3] -> Print(AIP) -> Discard;
 }
 
@@ -33,6 +33,7 @@ elementclass IpSplitter { |
 	cls[1] -> [1]output;
 }
 
+arpq :: ARPQuerier(outface);
 
 out_int :: Queue(1024) -> ToDevice(napt-eth2);
 out_ext :: Queue(1024) -> ToDevice(napt-eth1);
@@ -50,7 +51,9 @@ arp[0]
 arp[1]
 -> out_ext;
 
-aip[1] -> Print(ARP-REP) -> Discard;
+aip[1]
+-> Print(ARP-REP)
+-> [1]arpq;
 
 aip[2]
 -> Strip(14)
@@ -91,7 +94,7 @@ icls_0[1]
 rw[0] -> n_0 :: Null;
 irw[0] -> n_0
 -> IPPrint(TO-PBZ)
--> Unstrip(14)
+-> [0]arpq
 -> out_ext;
 
 rw[1] -> n_1 :: Null;
