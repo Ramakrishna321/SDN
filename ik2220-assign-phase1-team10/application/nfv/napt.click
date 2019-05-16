@@ -55,17 +55,17 @@ elementclass NATRewriter {
 }
 
 elementclass NAT {
-	$internal_if, $internal_dev,
-	$external_if, $external_dev,
+	$internal_if,
+	$external_if,
 	$nat_mapping |
 
-	td_internal :: Queue(1024) -> ToDevice($internal_dev);
-	td_external :: Queue(1024) -> ToDevice($external_dev);
+	td_internal :: Queue(1024) -> [0]output; // internal device
+	td_external :: Queue(1024) -> [1]output; // external device
 
-	FromDevice($internal_dev, SNIFFER false)
+	input[0] // internal device
 	-> cls_internal :: NATClassifier;
 
-	FromDevice($external_dev, SNIFFER false)
+	input[1] // external device
 	-> cls_external :: NATClassifier;
 
 	// ARP-REQ
@@ -97,13 +97,9 @@ elementclass NAT {
 	cls_internal[3]	-> [2]natrw;
 	cls_external[3]	-> [3]natrw;
 
-	natrw[0] -> split_1 :: Tee; // not necessary 
-	split_1[0] -> [0]qry_external;
-//	split_1[1] -> [0]qry_internal;
+	natrw[0] -> [0]qry_external;
 
-	natrw[1] -> split_2 :: Tee; // not necessary
-	split_2[0] -> [0]qry_internal;
-//	split_2[1] -> [0]qry_external; // Removed the query to external.
+	natrw[1] -> [0]qry_internal;
 }
 
 // NAPT interface addresses
@@ -114,7 +110,15 @@ AddressInfo(
 
 // Initialize NAT
 nat :: NAT(
-	internal, napt-eth2,		// internal interface
-	external, napt-eth1,		// external interface
+	internal,	// internal interface
+	external,	// external interface
 	100.0.0.1 50000-65535 - -	// rewrite pattern
 );
+
+FromDevice(napt-eth2, SNIFFER false)
+-> [0]nat[0]
+-> ToDevice(napt-eth2);
+
+FromDevice(napt-eth1, SNIFFER false)
+-> [1]nat[1]
+-> ToDevice(napt-eth1);
