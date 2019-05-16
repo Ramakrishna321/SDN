@@ -62,10 +62,10 @@ elementclass NAT {
 	td_internal :: Queue(1024) -> ToDevice($internal_dev);
 	td_external :: Queue(1024) -> ToDevice($external_dev);
 
-	FromDevice($internal_dev)
+	FromDevice($internal_dev, SNIFFER false)
 	-> cls_internal :: NATClassifier;
 
-	FromDevice($external_dev)
+	FromDevice($external_dev, SNIFFER false)
 	-> cls_external :: NATClassifier;
 
 	// ARP-REQ
@@ -97,13 +97,13 @@ elementclass NAT {
 	cls_internal[3]	-> [2]natrw;
 	cls_external[3]	-> [3]natrw;
 
-	natrw[0] -> split_1 :: Tee;
-	split_1[0] -> [0]qry_internal;
-	split_1[1] -> [0]qry_external;
+	natrw[0] -> split_1 :: Tee; // not necessary 
+	split_1[0] -> [0]qry_external;
+//	split_1[1] -> [0]qry_internal;
 
-	natrw[1] -> split_2 :: Tee;
+	natrw[1] -> split_2 :: Tee; // not necessary
 	split_2[0] -> [0]qry_internal;
-	split_2[1] -> [0]qry_external;
+//	split_2[1] -> [0]qry_external; // Removed the query to external.
 }
 
 // NAPT interface addresses

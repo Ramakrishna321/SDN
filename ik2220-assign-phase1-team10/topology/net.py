@@ -29,7 +29,7 @@ NET = Mininet(topo=TOPO,
               switch=OVSSwitch,
               controller=CTRL,
               autoSetMacs=False,
-              autoStaticArp=True,
+              autoStaticArp=False,
               build=True,
               cleanup=True)
 

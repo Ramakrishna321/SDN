@@ -132,9 +132,9 @@ NODEDEFS = [
     {
         'name':'fw1',
         'type':'SWITCH',
-        'dpid':'0000000000000001',
-        'mode':'FIREWALL',
-        'config':'fw1_rules',
+#        'dpid':'0000000000000001',
+#        'mode':'FIREWALL',
+#        'config':'fw1_rules',
         'links':{
             'sw1',
             'sw2',
