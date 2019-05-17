@@ -154,8 +154,8 @@ NODEDEFS = [
     {
         'name':'lb1',
         'type':'SWITCH',
-#        'dpid':'0000000000000003',
-#        'mode':'NFV',
+        'dpid':'0000000000000003',
+        'mode':'NFV',
         'links':{
             'sw2',
             'sw3',
