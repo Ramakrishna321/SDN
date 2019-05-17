@@ -26,6 +26,11 @@ clean:
 	@echo "-------------------------"
 	sudo killall python 2>/dev/null; \
     echo -n ""
+	@echo "-------------------------"
+	@echo "Clean up Click           "
+	@echo "-------------------------"
+	sudo killall click 2>/dev/null; \
+	echo -n ""
 	@echo "-----------------------------"
 	@echo "Clean up runtime artifacts   "
 	@echo "-----------------------------"
