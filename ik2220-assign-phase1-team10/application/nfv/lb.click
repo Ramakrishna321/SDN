@@ -10,26 +10,23 @@ elementclass EtherClassifier { |
     cls[0] -> [0]output;
     cls[1] -> [1]output;
 
-
     cls[2]
     -> Strip(14)
     -> CheckIPHeader
     -> [2]output;
 }
 
-rrmapper1 :: RoundRobinIPMapper( - - 100.0.0.20 - 0 0, - - 100.0.0.21 - 0 0, - - 100.0.0.22 - 0 0);
-rrmapper2 :: RoundRobinIPMapper( - - 100.0.0.40 - 0 0, - - 100.0.0.41 - 0 0, - - 100.0.0.42 - 0 0);
-
 elementclass LBRewriter {
     $lb_mapping|
 
+	IPRewriterPatterns(SRW $lbIP - - -);
+
     // IP rewriter elements
     rw :: IPRewriter($lb_mapping);
-    irw :: IPRewriter(pattern 100.0.0.25 - - - 0 0);
+    irw :: IPRewriter(pattern SRW 0 0);
 
     //IP
     // internal to external mapping
-
     input[0] -> irw -> [0]output;;
 
     // external to internal mapping
@@ -84,35 +81,29 @@ elementclass LB {
 
     lbrw[0] -> IPPrint(OUT-2) ->[0]qry_external
     lbrw[1] -> IPPrint(IN-2) ->[0]qry_internal;
-
 }
-// Initialize Load Balancer
-lb :: LB(
-    // load balancer 1
-    internal, // internal interface
-    external, // external interface
-    rrmapper1,
-
-);
-
 
 
 // LB interface addresses
 AddressInfo(
-    internal 100.0.0.25 100.0.0.0/24  00-00-00-00-00-11,
-    external 100.0.0.25 100.0.0.16/28 00-00-00-00-00-10,
-
-
-
-
-//    lb2_internal  100.0.0.45                  00-00-00-00-00-12,
-//  lb2_external    100.0.0.45  100.0.0.32/28   00-00-00-00-00-13,
+	internal $lbIP 100.0.0.0/24 $ifInternalMAC,
+	external $lbIP $lbExternalRange $ifExternalMAC,
 );
 
-//for input and output from lb1
-FromDevice(lb1-eth2, SNIFFER false)
+rrmapper :: RoundRobinIPMapper($server0, $server1, $server2);
+
+
+// Initialize Load Balancer
+lb :: LB(
+    internal, // internal interface
+    external, // external interface
+    rrmapper,
+);
+
+FromDevice($ifInternal, SNIFFER false)
 -> [0]lb[0]
--> ToDevice(lb1-eth1);
-FromDevice(lb1-eth1, SNIFFER false)
+-> ToDevice($ifExternal);
+
+FromDevice($ifExternal, SNIFFER false)
 -> [1]lb[1]
--> ToDevice(lb1-eth2);
+-> ToDevice($ifInternal);

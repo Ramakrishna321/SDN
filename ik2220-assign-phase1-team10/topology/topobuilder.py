@@ -73,7 +73,7 @@ class TopoBuilder(object):
                 mac = node.get('MAC')
                 ip = node.get('ip')
                 impl.addHost(name, ip=ip, mac=mac)
-            elif typ in ('SWITCH', 'FIREWALL'):
+            elif typ == 'SWITCH':
                 links = node.get('links')
                 if not links:
                     raise ValueError('%s: dangling switch: missing `links`' % name)

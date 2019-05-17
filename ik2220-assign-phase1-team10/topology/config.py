@@ -14,72 +14,66 @@
 #           Switch identifier, auto-gen unless defined
 # - config: [mandatory field present in Switch if mode is defined] configuration
 #           for specific modes 
+
+import os
+
+SCRIPTDIR = os.environ['CLICK_SCRIPT_DIR']
+
 NODEDEFS = [
     {
         'name':'h1',
         'type':'HOST',
         'ip':'100.0.0.11/24',
-        'MAC':'00:00:00:00:00:01'
     },
     {
         'name':'h2',
         'type':'HOST',
         'ip':'100.0.0.12/24',
-        'MAC':'00:00:00:00:00:02'
     },
     {
         'name':'ds1',
         'type':'HOST',
         'ip':'100.0.0.20/24',
-        'MAC':'00:00:00:00:00:03'
     },
     {
         'name':'ds2',
         'type':'HOST',
         'ip':'100.0.0.21/24',
-        'MAC':'00:00:00:00:00:04'
     },
     {
         'name':'ds3',
         'type':'HOST',
         'ip':'100.0.0.22/24',
-        'MAC':'00:00:00:00:00:05'
     },
     {
         'name':'ws1',
         'type':'HOST',
         'ip':'100.0.0.40/24',
-        'MAC':'00:00:00:00:00:06'
     },
     {
         'name':'ws2',
         'type':'HOST',
         'ip':'100.0.0.41/24',
-        'MAC':'00:00:00:00:00:07'
     },
     {
         'name':'ws3',
         'type':'HOST',
         'ip':'100.0.0.42/24',
-        'MAC':'00:00:00:00:00:08'
     },
     {
         'name':'h3',
         'type':'HOST',
         'ip':'10.0.0.51/24',
-        'MAC':'00:00:00:00:00:09'
     },
     {
         'name':'h4',
         'type':'HOST',
         'ip':'10.0.0.52/24',
-        'MAC':'00:00:00:00:00:0a'
     },
     {
         'name':'insp',
         'type':'HOST',
         'ip':'100.0.0.30/24',
-        'MAC':'00:00:00:00:00:0b'
     },
     {
         'name':'sw1',
@@ -156,6 +150,7 @@ NODEDEFS = [
         'type':'SWITCH',
         'dpid':'0000000000000003',
         'mode':'NFV',
+        'script': '%s/loadBalancer.sh lb1 100.0.0.25 100.0.0.16/28 &' % SCRIPTDIR,
         'links':{
             'sw2',
             'sw3',
@@ -164,8 +159,9 @@ NODEDEFS = [
     {
         'name':'lb2',
         'type':'SWITCH',
-#        'dpid':'0000000000000004',
-#        'mode':'NFV',
+        'dpid':'0000000000000004',
+        'mode':'NFV',
+        'script': '%s/loadBalancer.sh lb2 100.0.0.45 100.0.0.32/28 &' % SCRIPTDIR,
         'links':{
             'ids',
             'sw4',
@@ -176,6 +172,7 @@ NODEDEFS = [
         'type':'SWITCH',
         'dpid':'0000000000000005',
         'mode':'NFV',
+        'script': 'bash %s/NAT.sh &' % SCRIPTDIR,
         'links':{
             'fw2',
             'sw5',

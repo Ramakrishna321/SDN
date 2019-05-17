@@ -7,4 +7,4 @@
 DIR=$(cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd)
 SRCTOP=$(cd $DIR/.. && pwd)
 
-cd $SRCTOP/topology && sudo python net.py $@
+cd $SRCTOP/topology && sudo CLICK_SCRIPT_DIR=$CLICK_SCRIPT_DIR python net.py $@

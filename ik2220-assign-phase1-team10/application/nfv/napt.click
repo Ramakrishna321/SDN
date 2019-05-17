@@ -104,8 +104,8 @@ elementclass NAT {
 
 // NAPT interface addresses
 AddressInfo(
-	internal	10.0.0.1	10.0.0.0/24		00-00-00-00-00-17,
-	external	100.0.0.1	100.0.0.0/24	00-00-00-00-00-16,
+	internal	10.0.0.1	10.0.0.0/24		$ifInternalMAC,
+	external	100.0.0.1	100.0.0.0/24	$ifExternalMAC,
 );
 
 // Initialize NAT

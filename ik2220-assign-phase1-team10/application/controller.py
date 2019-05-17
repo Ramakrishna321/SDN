@@ -1,5 +1,6 @@
 ''' IK2220 SDN Phase 1 Pox Controller '''
 
+import subprocess
 from collections import defaultdict
 
 from pox.core import core
@@ -40,13 +41,14 @@ class Controller(object):
             mode = nodedef.get('mode')
             config = nodedef.get('config')
             dpid = nodedef.get('dpid')
+            script = nodedef.get('script')
             # add pre-definition for non-standard switches
             if mode and config and dpid:
                 dpid = Controller.to_pox_dpid(dpid)
                 self.switches[dpid] = {'mode': mode, 'config': config}
-            elif mode and dpid:
+            elif mode and script and dpid:
                 dpid = Controller.to_pox_dpid(dpid)
-                self.switches[dpid] = {'mode': mode}
+                self.switches[dpid] = {'mode': mode, 'script': script}
                 print('NFV step 1')
         core.openflow.addListeners(self)
 
@@ -64,6 +66,6 @@ class Controller(object):
             if conf['mode'] == 'FIREWALL':
                 self.switches[dpid] = Firewall(event.connection, conf['config'], dpid)
             if conf['mode'] == 'NFV':
-                print('DO Nothing as NFV')
+                subprocess.call(conf['script'], shell=True)
         else:
             self.switches[dpid] = LearningSwitch(event.connection, False)

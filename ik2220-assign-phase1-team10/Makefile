@@ -4,8 +4,10 @@ CFG = ${SRCTOP}/topology/config.py
 APP = ${SRCTOP}/application
 POXAPP = ${POXDIR}/ext/application
 PYTHONPATH = "${SRCTOP}/:"
+CLICK_SCRIPT_DIR = ${APP}/nfv
 
 export PYTHONPATH
+export CLICK_SCRIPT_DIR
 
 
 # Main make targets
@@ -34,13 +36,14 @@ topo:
 	@echo "-------------------------"
 	@echo "Starting Mininet         "
 	@echo "-------------------------"
-	@bash test/run_mininet.sh
+	test/run_mininet.sh
 
 app:
 	@echo "-------------------------"
 	@echo "Starting POX Controller  "
 	@echo "-------------------------"
-	@bash test/run_pox.sh
+	chmod +x ${CLICK_SCRIPT_DIR}/*.sh
+	test/run_pox.sh
 
 #test: clean
 test:
@@ -52,3 +55,6 @@ test:
 	bash ${SRCTOP}/test/runall.sh
 	@echo ""
 	${MAKE} clean
+
+shell:
+	/bin/bash
