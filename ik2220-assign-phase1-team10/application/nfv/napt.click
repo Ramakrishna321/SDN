@@ -59,8 +59,8 @@ elementclass NAT {
 	$external_if,
 	$nat_mapping |
 
-	td_internal :: Queue(1024) -> [0]output; // internal device
-	td_external :: Queue(1024) -> [1]output; // external device
+	td_internal :: SimpleQueue -> [0]output; // internal device
+	td_external :: SimpleQueue -> [1]output; // external device
 
 	input[0] // internal device
 	-> cls_internal :: NATClassifier;

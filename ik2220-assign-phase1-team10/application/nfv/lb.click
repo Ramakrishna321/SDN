@@ -38,8 +38,8 @@ elementclass LB {
     $external_if,
     $lb_mapping |
 
-    td_internal :: Queue(1024) -> [1]output;
-    td_external :: Queue(1024) -> [0]output;
+    td_internal :: SimpleQueue -> [1]output;
+    td_external :: SimpleQueue -> [0]output;
 
     //Checking outgoing packets
     input[0]
