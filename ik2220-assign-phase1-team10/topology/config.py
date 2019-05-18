@@ -181,8 +181,9 @@ NODEDEFS = [
     {
         'name':'ids',
         'type':'SWITCH',
-#        'dpid':'0000000000000006',
-#        'mode':'NFV',
+        'dpid':'0000000000000006',
+        'script': 'echo OK',
+        'mode':'NFV',
         'links':{
             'sw2',
             'insp',
