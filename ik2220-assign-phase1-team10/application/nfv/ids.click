@@ -46,7 +46,6 @@ elementclass EtherClassifier { |
 
 elementclass PUTCLS{ |
     input 
-    \\Keyword checking
     -> cls :: Classifier(
         82/636174202f6574632f706173737764,          // cat /etc/passwd
         82/636174202f7661722f6c6f672f,              // cat /var/log/
