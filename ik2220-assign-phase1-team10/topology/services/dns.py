@@ -37,8 +37,8 @@ while True:
     #default is ws1
       query = dns[DNSQR].qname.decode('ascii')
       response = DNS(id=dns.id, ancount=1, qr=1, 
-                     an=DNSRR(rrname=str("Default:100.0.0.40"), type='A', 
-                     rdata=str("100.0.0.40"), ttl=1234))
+                     an=DNSRR(rrname=str("Default:100.0.0.45"), type='A', 
+                     rdata=str("100.0.0.45"), ttl=1234))
       print(repr(response))
       sock.sendto(bytes(response), addr)
   except Exception as e:
