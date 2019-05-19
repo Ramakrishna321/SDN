@@ -73,13 +73,13 @@ elementclass IDS{ |
     ////////////////////////////////////////////////////////
     // These are not needed to be checked
     // Forward ARP directly
-    cls_external[0] -> Print(ARP, MAXLENGTH 140, CONTENTS ASCII) -> td_internal;
+    cls_external[0] -> Print(ARP, MAXLENGTH 140, CONTENTS ASCII) -> Counter -> td_internal;
     //ICMP and UDP
-	cls_external[1]	-> Print(UDP-ICMP, MAXLENGTH 140, CONTENTS ASCII) -> Unstrip(14) -> td_internal;
+	cls_external[1]	-> Print(UDP-ICMP, MAXLENGTH 140, CONTENTS ASCII) -> Unstrip(14) -> Counter -> td_internal;
      //Other
-	cls_external[2] -> Print(Other-e, MAXLENGTH 140, CONTENTS ASCII) -> Unstrip(14) -> td_internal;
+	cls_external[2] -> Print(Other-e, MAXLENGTH 140, CONTENTS ASCII) -> Unstrip(14) -> Counter -> td_internal;
     // HTTP OTHERS
-    cls_external[11] -> Print(HeaderNotMatched, MAXLENGTH 140, CONTENTS ASCII) -> td_internal;
+    cls_external[11] -> Print(HeaderNotMatched, MAXLENGTH 140, CONTENTS ASCII) -> Counter -> td_internal;
     /////////////////////////////////////////////////////////
     
     ////////////////////////////////////////////////////////
@@ -113,9 +113,13 @@ elementclass IDS{ |
 ids :: IDS();
 
 FromDevice(ids-eth2, SNIFFER false)
+-> AverageCounter
+-> Counter
 -> ids[0]
+-> Counter
 -> ToDevice(ids-eth1);
 ids[1]
+-> Counter
 -> ToDevice(ids-eth3);
 
 FromDevice(ids-eth1, SNIFFER false)
