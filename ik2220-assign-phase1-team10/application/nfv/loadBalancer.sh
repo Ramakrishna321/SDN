@@ -28,17 +28,6 @@ server0="$(createRRMapping 0 $lbIP)"
 server1="$(createRRMapping 1 $lbIP)"
 server2="$(createRRMapping 2 $lbIP)"
 
-echo "Starting LoadBalancer with params:"
-echo lbIP: "$lbIP" 
-echo lbExternalRange: "$lbExternalRange" 
-echo ifInternal: "$ifInternal" 
-echo ifExternal: "$ifExternal" 
-echo ifInternalMAC: "$ifInternalMAC" 
-echo ifExternalMAC: "$ifExternalMAC" 
-echo server0: "$server0" 
-echo server1: "$server1" 
-echo server2: "$server2" 
-
 LB=$(echo $lbName | tr '[:lower:]' '[:upper:]')
 report=$SRCTOP/results/$lbName.report
 

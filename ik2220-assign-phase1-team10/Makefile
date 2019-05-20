@@ -1,10 +1,10 @@
 SRCTOP = $(shell pwd)
 POXDIR = ${HOME}/pox
 CFG = ${SRCTOP}/topology/config.py
-APP = ${SRCTOP}/application
+APP = ${SRCTOP}/application/sdn
 POXAPP = ${POXDIR}/ext/application
-PYTHONPATH = "${SRCTOP}/:"
-CLICK_SCRIPT_DIR = ${APP}/nfv
+PYTHONPATH = "${SRCTOP}/application:"
+CLICK_SCRIPT_DIR = ${SRCTOP}/application/nfv
 
 export PYTHONPATH
 export CLICK_SCRIPT_DIR

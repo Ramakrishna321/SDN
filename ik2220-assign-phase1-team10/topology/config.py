@@ -126,9 +126,9 @@ NODEDEFS = [
     {
         'name':'fw1',
         'type':'SWITCH',
-#        'dpid':'0000000000000001',
-#        'mode':'FIREWALL',
-#        'config':'fw1_rules',
+        'dpid':'0000000000000001',
+        'mode':'FIREWALL',
+        'config':'fw1_rules',
         'links':{
             'sw1',
             'sw2',
@@ -137,9 +137,9 @@ NODEDEFS = [
     {
         'name':'fw2',
         'type':'SWITCH',
-#        'dpid':'0000000000000002',
-#        'mode':'FIREWALL',
-#        'config':'fw2_rules',
+        'dpid':'0000000000000002',
+        'mode':'FIREWALL',
+        'config':'fw2_rules',
         'links':{
             'napt',
             'sw2',

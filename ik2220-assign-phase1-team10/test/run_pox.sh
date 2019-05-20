@@ -8,12 +8,12 @@ SRCTOP=$(cd $DIR/.. && pwd)
 
 POXDIR=${HOME}/pox
 CFG=${SRCTOP}/topology/config.py
-APP=${SRCTOP}/application
+APP=${SRCTOP}/application/sdn
 POXAPP=${POXDIR}/ext/application
 
 # creates symlink to the topology/config
-rm -f ${SRCTOP}/application/config.py
-ln -s ${CFG} ${SRCTOP}/application/config.py
+rm -f ${APP}/config.py
+ln -s ${CFG} ${APP}/config.py
 
 # creates symlink to the pox/ext/ directory
 rm -f ${POXAPP}
