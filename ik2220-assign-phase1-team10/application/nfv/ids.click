@@ -33,15 +33,15 @@ elementclass EtherClassifier { |
     ipcls[1] -> Unstrip(14) -> [0]http_cls; //TCP
     ipcls[2] -> [2]output; // Other
     
-	http_cls[0]  ->[3]output; // 
-	http_cls[1]  ->[4]output; // 
-	http_cls[2]  ->[5]output; // 
-    http_cls[3]  ->[6]output; // 
-    http_cls[4]  ->[7]output; // 
-    http_cls[5]  ->[8]output; // 
-    http_cls[6]  ->[9]output; // 
-    http_cls[7]  ->[10]output; // 
-    http_cls[8]  ->[11]output; // 
+	http_cls[0] -> [3]output; // 
+	http_cls[1] -> [4]output; // 
+	http_cls[2] -> [5]output; // 
+    http_cls[3] -> [6]output; // 
+    http_cls[4] -> [7]output; // 
+    http_cls[5] -> [8]output; // 
+    http_cls[6] -> [9]output; // 
+    http_cls[7] -> [10]output; // 
+    http_cls[8] -> [11]output; // 
 }
 
 elementclass PUTCLS{ |
@@ -63,68 +63,122 @@ elementclass PUTCLS{ |
 }
 
 elementclass IDS{ |
-    td_internal :: SimpleQueue -> [0]output;
-    td_insp :: SimpleQueue -> [1]output;
+    td_internal :: SimpleQueue -> ids_int_cnt::AverageCounter -> [0]output;
+    td_insp :: SimpleQueue -> ids_insp_cnt::AverageCounter -> [1]output;
     
     
     //Classifying incoming packets
-    input -> cls_external :: EtherClassifier;
+    input
+	-> ids_avg_cnt :: AverageCounter
+	-> cls_external :: EtherClassifier;
     
     ////////////////////////////////////////////////////////
     // These are not needed to be checked
     // Forward ARP directly
-    cls_external[0] -> Print(ARP, MAXLENGTH 140, CONTENTS ASCII) -> Counter -> td_internal;
+    cls_external[0]
+	-> arp_cnt :: Counter
+	-> td_internal;
     //ICMP and UDP
-	cls_external[1]	-> Print(UDP-ICMP, MAXLENGTH 140, CONTENTS ASCII) -> Unstrip(14) -> Counter -> td_internal;
+	cls_external[1]
+	-> icm_udp_cnt :: Counter
+	-> Unstrip(14)
+	-> Counter
+	-> td_internal;
      //Other
-	cls_external[2] -> Print(Other-e, MAXLENGTH 140, CONTENTS ASCII) -> Unstrip(14) -> Counter -> td_internal;
+	cls_external[2]
+	-> Unstrip(14)
+	-> other_cnt :: Counter
+	-> td_internal;
     // HTTP OTHERS
-    cls_external[11] -> Print(HeaderNotMatched, MAXLENGTH 140, CONTENTS ASCII) -> Counter -> td_internal;
+    cls_external[11]
+	-> td_internal;
     /////////////////////////////////////////////////////////
     
     ////////////////////////////////////////////////////////
     //These have to check for patterns
 	// HTTP PUT
-	cls_external[3] -> Print(HTTP-GET, MAXLENGTH 140, CONTENTS ASCII) -> putcls:: PUTCLS;
-    putcls[0]   -> td_internal;
-    putcls[1]   -> td_insp;
+	cls_external[3]
+	-> putcls:: PUTCLS;
+    putcls[0]
+	-> put_ok :: Counter
+	-> td_internal;
+
+    putcls[1]
+	-> put_nok :: Counter
+	-> td_insp;
     // HTTP POST
-    cls_external[4] -> Print(HTTP-GET, MAXLENGTH 140, CONTENTS ASCII) -> td_internal;    
+    cls_external[4]
+	-> post_cnt:: Counter
+	-> td_internal;    
     ////////////////////////////////////////////////////////
 
     /////////////////////////////////////////////////////
     // These go to insp and have to pcap
     // HTTP GET
-    cls_external[5] -> Print(HTTP-insp, MAXLENGTH 140, CONTENTS ASCII) -> td_insp;
+    cls_external[5]
+	-> get_cnt :: Counter
+	-> td_insp;
     // HTTP HEAD
-    cls_external[6] -> Print(HTTP-insp, MAXLENGTH 140, CONTENTS ASCII) -> td_insp;
+    cls_external[6]
+	-> head_cnt :: Counter
+	-> td_insp;
     // HTTP OPTIONS
-    cls_external[7] -> Print(HTTP-insp, MAXLENGTH 140, CONTENTS ASCII) -> td_insp;
+    cls_external[7]
+	-> opt_cnt :: Counter
+	-> td_insp;
     // HTTP TRACE
-    cls_external[8] -> Print(HTTP-insp, MAXLENGTH 140, CONTENTS ASCII) -> td_insp;
+    cls_external[8]
+	-> trace_cnt :: Counter
+	-> td_insp;
     // HTTP DELETE
-    cls_external[9] -> Print(HTTP-insp, MAXLENGTH 140, CONTENTS ASCII) -> td_insp;
+    cls_external[9]
+	-> del_cnt :: Counter
+	-> td_insp;
     // HTTP CONNECT
-    cls_external[10] -> Print(HTTP-insp, MAXLENGTH 140, CONTENTS ASCII) -> td_insp;
+    cls_external[10]
+	-> conn_cnt :: Counter
+	-> td_insp;
     ////////////////////////////////////////////////////////
+
+
+	DriverManager(
+		pause,
+		print "======================= IDS Report =======================",
+		print "Input packet rate (pps): ", print ids_avg_cnt.rate,
+		print "Input packet count: ", print ids_avg_cnt.count,
+		print "ARP packet count:", print arp_cnt.count,
+		print "ICMP and UDP packet count:", print icm_udp_cnt.count,
+		print "----------------------------------------------------------",
+		print "Total # of packet to INSP: ", print ids_insp_cnt.count,
+		print "Output packet rate (pps) to INSP:", print ids_insp_cnt.rate,
+		print "HTTP GET:", print get_cnt.count,
+		print "HTTP HEAD:", print head_cnt.count,
+		print "HTTP OPTIONS:", print opt_cnt.count,
+		print "HTTP TRACE:", print trace_cnt.count,
+		print "HTTP DELETE:", print del_cnt.count,
+		print "HTTP CONNECT:", print conn_cnt.count,
+		print "HTTP PUT (NOK):", print put_nok.count,
+		print "----------------------------------------------------------",
+		print "Total # of packet to LB2: ", print ids_int_cnt.count,
+		print "Output packet rate (pps) to LB2:", print ids_int_cnt.rate,
+		print "HTTP PUT (OK):", print put_ok.count,
+		print "HTTP POST:", print post_cnt.count,
+		print "==========================================================",
+		stop
+	);
 }
 
 
 ids :: IDS();
 
 FromDevice(ids-eth2, SNIFFER false)
--> ids_avg_cnt :: AverageCounter
--> Counter
 -> ids[0]
--> ids_lb2_cnt :: Counter
 -> ToDevice(ids-eth1);
 
 ids[1]
--> ids_insp_cnt :: Counter
 -> ToDevice(ids-eth3);
 
 FromDevice(ids-eth1, SNIFFER false)
 -> SimpleQueue 
 -> ToDevice(ids-eth2);
 
-//DriverManager(ids_avg_cnt.count);

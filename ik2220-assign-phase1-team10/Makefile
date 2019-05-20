@@ -8,6 +8,7 @@ CLICK_SCRIPT_DIR = ${APP}/nfv
 
 export PYTHONPATH
 export CLICK_SCRIPT_DIR
+export SRCTOP
 
 
 # Main make targets
