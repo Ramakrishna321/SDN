@@ -17,7 +17,7 @@ class Firewall(LearningSwitch):
     capabilities.
     '''
     IDLE_TIMEOUT = 30
-    HARD_TIMEOUT = 60
+    HARD_TIMEOUT = 90
     slots = ('rules', 'active_conns')
     def __init__(self, conn, config, dpid):
         self.rules = cfg.RULES.get(config)
@@ -77,7 +77,11 @@ class Firewall(LearningSwitch):
         pkt = event.parsed
         ip_pkt = pkt.find('ipv4')
         if not ip_pkt:
-            return
+            # ARPs need to be let through, phase1 doesn't specifies handling ARPs,
+            # but phase2 firewall cannot work without handling them...
+            # no specific firewall rule is applied, flow is just simply installed.
+            arp_pkt = pkt.find('arp')
+            return True if arp_pkt else False
         src = ip_pkt.srcip
         dst = ip_pkt.dstip
         proto = ip_pkt.protocol

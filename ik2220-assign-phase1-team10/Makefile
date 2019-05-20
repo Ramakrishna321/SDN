@@ -64,3 +64,6 @@ test:
 
 shell:
 	/bin/bash
+pkg:
+	cd ${SRCTOP}/../; \
+	tar czf ik2220-assign-${PHASE}-team10.tar.gz -C ${SRCTOP} .
