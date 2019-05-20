@@ -4,6 +4,7 @@ elementclass EtherClassifier { |
         12/0806 20/0001,    // ARP-REQ
         12/0806 20/0002,    // ARP-REP
         12/0800,            // IP
+		-,
     );
 
     // Forward ARP
@@ -14,6 +15,8 @@ elementclass EtherClassifier { |
     -> Strip(14)
     -> CheckIPHeader
     -> [2]output;
+
+	cls[3] -> [3]output;
 }
 
 elementclass LBRewriter {
@@ -43,30 +46,36 @@ elementclass LB {
 
     //Checking outgoing packets
     input[0]
+	-> lb_avg_out :: AverageCounter
     -> cls_internal :: EtherClassifier;
 
     // Checking incoming packets
     input[1]
+	-> lb_avg_in :: AverageCounter
     -> cls_external :: EtherClassifier;
 
     // ARP-REQ
     // telling internal requests that the packet has to go through 100.0.0.25 or 100.0.0.45
     cls_internal[0]
+	-> arp_req_int :: Counter
     -> ARPResponder($internal_if)
     -> td_internal;
 
     // telling external requests that the service is at 100.0.0.25 or 100.0.0.45
     cls_external[0]
+	-> arp_req_ext :: Counter
     -> ARPResponder($external_if)
     -> td_external;
 
     // ARP-REP
     cls_internal[1]
+	-> arp_rep_int :: Counter
     -> [1]qry_internal :: ARPQuerier($internal_if)
     -> td_internal;
 
     // getting the arps for the virtual service
     cls_external[1]
+	-> arp_rep_ext :: Counter
     -> [1]qry_external :: ARPQuerier($external_if)
     -> td_external;
 
@@ -74,13 +83,31 @@ elementclass LB {
     lbrw :: LBRewriter($lb_mapping);
 
 
-    cls_internal[2] ->IPPrint(fromINT-1) -> [0]lbrw;
-    cls_external[2] ->IPPrint(fromOUT-1) -> [1]lbrw;
+    cls_internal[2] -> [0]lbrw;
+    cls_external[2] -> [1]lbrw;
 
+    lbrw[0] -> ip_ext :: Counter -> [0]qry_external
+    lbrw[1] -> ip_int :: Counter -> [0]qry_internal;
 
+	cls_internal[3] -> Discard;
+	cls_external[3] -> drop_ext :: Counter -> Discard;
 
-    lbrw[0] -> IPPrint(OUT-2) -> [0]qry_external
-    lbrw[1] -> IPPrint(IN-2)  -> [0]qry_internal;
+	DriverManager(
+		pause,
+		print "Total # of input packets:", print lb_avg_in.count,
+		print "Input packet rate (pps):", print lb_avg_in.rate,
+		print "Total # of output packets:", print lb_avg_out.count,
+		print "Output packet rate (pps):", print lb_avg_out.rate,
+		print "----------------------------------------------------------",
+		print "ARP requests (internal):", print arp_req_int.count,
+		print "ARP requests (external):", print arp_req_ext.count,
+		print "----------------------------------------------------------",
+		print "IP packets (internal):", print ip_int.count,
+		print "IP packets (external):", print ip_ext.count,
+		print "----------------------------------------------------------",
+		print "Dropped packets:", print drop_ext.count,
+		stop
+	);
 }
 
 

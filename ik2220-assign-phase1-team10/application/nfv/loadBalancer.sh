@@ -39,6 +39,11 @@ echo server0: "$server0"
 echo server1: "$server1" 
 echo server2: "$server2" 
 
+LB=$(echo $lbName | tr '[:lower:]' '[:upper:]')
+report=$SRCTOP/results/$lbName.report
+
+echo "======================= $LB Report =======================" > $report
+
 sudo click \
 	lbIP="$lbIP" \
 	lbExternalRange="$lbExternalRange" \
@@ -49,4 +54,6 @@ sudo click \
 	server0="$server0" \
 	server1="$server1" \
 	server2="$server2" \
-	$CLICK_SCRIPT_DIR/lb.click
+	$CLICK_SCRIPT_DIR/lb.click >> $report
+
+echo "==========================================================" >> $report
