@@ -71,23 +71,19 @@ elementclass NAT {
 	// ARP-REQ
 	cls_internal[0]
 	-> ARPResponder($internal_if)
-	-> Counter
     -> td_internal;
 
 	cls_external[0]
 	-> ARPResponder($external_if)
-	-> Counter
     -> td_external;
 
 	// ARP-REP
 	cls_internal[1]
 	-> [1]qry_internal :: ARPQuerier($internal_if)
-	-> Counter
     -> td_internal;
 
 	cls_external[1]
 	-> [1]qry_external :: ARPQuerier($external_if)
-	-> Counter
     -> td_external;
 
 	// IP rewriting
@@ -101,9 +97,9 @@ elementclass NAT {
 	cls_internal[3]	-> [2]natrw;
 	cls_external[3]	-> [3]natrw;
 
-	natrw[0] -> Counter -> [0]qry_external;
+	natrw[0] -> [0]qry_external;
 
-	natrw[1] -> Counter -> [0]qry_internal;
+	natrw[1] -> [0]qry_internal;
 }
 
 // NAPT interface addresses
@@ -120,17 +116,9 @@ nat :: NAT(
 );
 
 FromDevice(napt-eth2, SNIFFER false)
--> AverageCounter
--> Counter
 -> [0]nat[0]
--> AverageCounter
--> Counter
 -> ToDevice(napt-eth2);
 
 FromDevice(napt-eth1, SNIFFER false)
--> AverageCounter
--> Counter
 -> [1]nat[1]
--> AverageCounter
--> Counter
 -> ToDevice(napt-eth1);

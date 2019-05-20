@@ -74,6 +74,7 @@ H4 = NET.get('h4')
 H4.cmd('route add default gw 10.0.0.1')
 
 INSP = NET.get('insp')
+INSP.cmd('tcpdump -A -w ../results/insp.pcap -i insp-eth0 &')
 
 #Run script to test the topo, tests are defined in script
 if len(sys.argv) > 1:
