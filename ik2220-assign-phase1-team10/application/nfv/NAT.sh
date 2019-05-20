@@ -14,4 +14,4 @@ ifExternalMAC="$(getMAC napt-eth1)"
 sudo click \
 	ifInternalMAC="$ifInternalMAC" \
 	ifExternalMAC="$ifExternalMAC" \
-	$CLICK_SCRIPT_DIR/napt.click
+	$CLICK_SCRIPT_DIR/napt.click > ${SRCTOP}/results/napt.report

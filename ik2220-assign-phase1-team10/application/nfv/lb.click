@@ -57,26 +57,26 @@ elementclass LB {
     // ARP-REQ
     // telling internal requests that the packet has to go through 100.0.0.25 or 100.0.0.45
     cls_internal[0]
-	-> arp_req_int :: Counter
     -> ARPResponder($internal_if)
+	-> arp_req_int :: Counter
     -> td_internal;
 
     // telling external requests that the service is at 100.0.0.25 or 100.0.0.45
     cls_external[0]
-	-> arp_req_ext :: Counter
     -> ARPResponder($external_if)
+	-> arp_req_ext :: Counter
     -> td_external;
 
     // ARP-REP
     cls_internal[1]
-	-> arp_rep_int :: Counter
     -> [1]qry_internal :: ARPQuerier($internal_if)
+	-> arp_rep_int :: Counter
     -> td_internal;
 
     // getting the arps for the virtual service
     cls_external[1]
-	-> arp_rep_ext :: Counter
     -> [1]qry_external :: ARPQuerier($external_if)
+	-> arp_rep_ext :: Counter
     -> td_external;
 
     // IP rewriting

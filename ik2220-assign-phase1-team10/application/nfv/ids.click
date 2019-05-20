@@ -70,6 +70,7 @@ elementclass IDS{ |
     //Classifying incoming packets
     input
 	-> ids_avg_cnt :: AverageCounter
+	-> inp_cnt :: Counter
 	-> cls_external :: EtherClassifier;
     
     ////////////////////////////////////////////////////////
@@ -145,7 +146,7 @@ elementclass IDS{ |
 		pause,
 		print "======================= IDS Report =======================",
 		print "Input packet rate (pps): ", print ids_avg_cnt.rate,
-		print "Input packet count: ", print ids_avg_cnt.count,
+		print "Input packet count: ", print inp_cnt.count,
 		print "ARP packet count:", print arp_cnt.count,
 		print "ICMP and UDP packet count:", print icm_udp_cnt.count,
 		print "----------------------------------------------------------",

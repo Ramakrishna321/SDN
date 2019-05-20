@@ -1,6 +1,6 @@
 // IK2220 - Phase 2. NAT implementation
 //
-// This implementation of NAT supports address and port translation of TCP, UDP
+// This implementation of NAPT supports address and port translation of TCP, UDP
 // and ICMP packets. ICMP translation only happens for echo requests and
 // responses.
 // The translation is from 10.0.0.0/24 to 100.0.0.0/24 subnet.
@@ -11,6 +11,7 @@ elementclass NATClassifier { |
 		12/0806 20/0001,	// ARP-REQ
 		12/0806 20/0002,	// ARP-REP
 		12/0800,			// IP
+		-,
 	);
 
 	// Forward ARP
@@ -25,6 +26,8 @@ elementclass NATClassifier { |
 
 	ipcls[0] -> [2]output;
 	ipcls[1] -> [3]output;
+
+	cls[3] -> [4]output;
 }
 
 elementclass NATRewriter {
@@ -63,43 +66,78 @@ elementclass NAT {
 	td_external :: SimpleQueue -> [1]output; // external device
 
 	input[0] // internal device
+	-> napt_int :: AverageCounter
 	-> cls_internal :: NATClassifier;
 
+	cls_internal[4] -> drop_int :: Counter -> Discard;
+
 	input[1] // external device
+	-> napt_ext :: AverageCounter
 	-> cls_external :: NATClassifier;
+
+	cls_external[4] -> drop_ext :: Counter -> Discard;
 
 	// ARP-REQ
 	cls_internal[0]
 	-> ARPResponder($internal_if)
+	-> arp_req_int :: Counter
     -> td_internal;
 
 	cls_external[0]
 	-> ARPResponder($external_if)
+	-> arp_req_ext :: Counter
     -> td_external;
 
 	// ARP-REP
 	cls_internal[1]
 	-> [1]qry_internal :: ARPQuerier($internal_if)
+	-> arp_rep_int :: Counter
     -> td_internal;
 
 	cls_external[1]
 	-> [1]qry_external :: ARPQuerier($external_if)
+	-> arp_rep_ext :: Counter
     -> td_external;
 
 	// IP rewriting
 	natrw :: NATRewriter($nat_mapping);
 
 	// ICMP
-	cls_internal[2]	-> [0]natrw;
-	cls_external[2]	-> [1]natrw;
+	cls_internal[2]	-> icmp_int :: Counter -> [0]natrw;
+	cls_external[2]	-> icmp_ext :: Counter -> [1]natrw;
 	
 	// UDP-TCP
-	cls_internal[3]	-> [2]natrw;
-	cls_external[3]	-> [3]natrw;
+	cls_internal[3]	-> udp_tcp_int :: Counter -> [2]natrw;
+	cls_external[3]	-> udp_tcp_ext :: Counter -> [3]natrw;
 
-	natrw[0] -> [0]qry_external;
+	natrw[0] -> rw_ext :: Counter -> [0]qry_external;
 
-	natrw[1] -> [0]qry_internal;
+	natrw[1] -> rw_int :: Counter -> [0]qry_internal;
+
+	DriverManager(
+		pause,
+		print "====================== NAPT Report =======================",
+		print "Input packet rate (pps) internal: ", print napt_int.rate,
+		print "Input packet rate (pps) external: ", print napt_ext.rate,
+		print "-----------------------------------------------------------",
+		print "ARP request internal:", print arp_req_int.count,
+		print "ARP request external:", print arp_req_ext.count,
+		print "ARP response internal:", print arp_rep_int.count,
+		print "ARP response external:", print arp_rep_ext.count,
+		print "-----------------------------------------------------------",
+		print "ICMP internal:", print icmp_int.count,
+		print "ICMP external:", print icmp_ext.count,
+		print "UDP and TCP internal:", print udp_tcp_int.count,
+		print "UDP and TCP external:", print udp_tcp_ext.count,
+		print "-----------------------------------------------------------",
+		print "NAPT mapped packets (int-ext):", print rw_ext.count,
+		print "NAPT mapped packets (ext-int):", print rw_int.count,
+		print "-----------------------------------------------------------",
+		print "Dropper packets internal:", print drop_int.count,
+		print "Dropper packets external:", print drop_ext.count,
+		print "===========================================================",
+		stop
+	);
 }
 
 // NAPT interface addresses
