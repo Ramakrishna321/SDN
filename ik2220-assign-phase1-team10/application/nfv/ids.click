@@ -113,15 +113,18 @@ elementclass IDS{ |
 ids :: IDS();
 
 FromDevice(ids-eth2, SNIFFER false)
--> AverageCounter
+-> ids_avg_cnt :: AverageCounter
 -> Counter
 -> ids[0]
--> Counter
+-> ids_lb2_cnt :: Counter
 -> ToDevice(ids-eth1);
+
 ids[1]
--> Counter
+-> ids_insp_cnt :: Counter
 -> ToDevice(ids-eth3);
 
 FromDevice(ids-eth1, SNIFFER false)
 -> SimpleQueue 
 -> ToDevice(ids-eth2);
+
+//DriverManager(ids_avg_cnt.count);
