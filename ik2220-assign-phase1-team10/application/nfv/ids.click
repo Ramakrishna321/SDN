@@ -47,11 +47,11 @@ elementclass EtherClassifier { |
 elementclass PUTCLS{ |
     input 
     -> cls :: Classifier(
-        82/636174202f6574632f706173737764,          // cat /etc/passwd
-        82/636174202f7661722f6c6f672f,              // cat /var/log/
-        82/494e53455254,                            // INSERT
-        82/555044415445,                            // UPDATE
-        82/44454c455445,                            // DELETE
+        209/636174202f6574632f706173737764,          // cat /etc/passwd
+        209/636174202f7661722f6c6f672f,              // cat /var/log/
+        209/494e53455254,                            // INSERT
+        209/555044415445,                            // UPDATE
+        209/44454c455445,                            // DELETE
         -,                                          // rest
     );
     cls[0] -> [1]output;
