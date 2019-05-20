@@ -20,7 +20,7 @@ trap user_abort SIGINT
 # so start everything from here...
 INFO "Starting POX..."
 $DIR/run_pox.sh &> $DIR/pox.log &
-sleep 5
+sleep 10
 
 INFO "Starting Mininet..."
 $DIR/run_mininet.sh $DIR/*.cmd 2>&1 | tee $DIR/mininet.log

@@ -87,7 +87,7 @@ def parsecurl(line, report):
         return 'REFUSED'
     # the http server was just acting up...
     elif 'Operation timed out' in line:
-        return 'OPTIMEOUT'
+        return 'TIMEOUT'
     elif line.startswith('<html>'):
         return 'SUCCESS'
     else:
