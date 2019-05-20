@@ -53,20 +53,24 @@ elementclass LB {
     // telling internal requests that the packet has to go through 100.0.0.25 or 100.0.0.45
     cls_internal[0]
     -> ARPResponder($internal_if)
+    -> Counter
     -> td_internal;
 
     // telling external requests that the service is at 100.0.0.25 or 100.0.0.45
     cls_external[0]
     -> ARPResponder($external_if)
+    -> Counter
     -> td_external;
 
     // ARP-REP
     cls_internal[1]
+    -> Counter
     -> [1]qry_internal :: ARPQuerier($internal_if)
     -> td_internal;
 
     // getting the arps for the virtual service
     cls_external[1]
+    -> Counter
     -> [1]qry_external :: ARPQuerier($external_if)
     -> td_external;
 
@@ -79,8 +83,8 @@ elementclass LB {
 
 
 
-    lbrw[0] -> IPPrint(OUT-2) ->[0]qry_external
-    lbrw[1] -> IPPrint(IN-2) ->[0]qry_internal;
+    lbrw[0] -> IPPrint(OUT-2) -> Counter -> [0]qry_external
+    lbrw[1] -> IPPrint(IN-2)  -> Counter -> [0]qry_internal;
 }
 
 
@@ -101,9 +105,17 @@ lb :: LB(
 );
 
 FromDevice($ifInternal, SNIFFER false)
+-> AverageCounter
+-> Counter
 -> [0]lb[0]
+-> AverageCounter
+-> Counter
 -> ToDevice($ifExternal);
 
 FromDevice($ifExternal, SNIFFER false)
+-> AverageCounter
+-> Counter
 -> [1]lb[1]
+-> AverageCounter
+-> Counter
 -> ToDevice($ifInternal);
