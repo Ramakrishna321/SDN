@@ -51,8 +51,7 @@ app:
 	chmod +x ${CLICK_SCRIPT_DIR}/*.sh
 	test/run_pox.sh
 
-#test: clean
-test:
+test: clean
 	@echo ""
 	@echo "-------------------------"
 	@echo "Starting Tests           "
@@ -62,8 +61,10 @@ test:
 	@echo ""
 	${MAKE} clean
 
+# Set up shell with smae env-vars for debugging
 shell:
 	/bin/bash
+
 pkg:
 	cd ${SRCTOP}/../; \
 	tar czf ik2220-assign-${PHASE}-team10.tar.gz -C ${SRCTOP} .

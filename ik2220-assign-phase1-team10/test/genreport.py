@@ -5,7 +5,7 @@ from datetime import datetime
 
 def writeheader(report):
     report.write('==============================================================================\n')
-    report.write('IK2220 Phase 1. Report\n')
+    report.write('IK2220 Phase 2. Report\n')
     report.write('==============================================================================\n')
     report.write('\n')
     report.write('Date: %s\n' % datetime.now().isoformat(' '))
@@ -75,9 +75,9 @@ def parsenc(line, report):
 
 def parsecurl(line, report):
     if line.startswith('curl_test'):
-        port = line.split('_')[2].split('.')[0]
-        report.write('  EXEC: curl against port %s\n' % port)
-        if port == '80':
+        t = line.split('_')[2].split('.')[0]
+        report.write('  EXEC: curl %s\n' % t)
+        if t == 'pass':
             return 'PASS'
         else:
             return 'FAIL'
@@ -98,7 +98,7 @@ def parseping(line, report):
         report.write("\t%s" % line)
     if line.startswith('*** Results:'):
         report.write("\t%s" % line)
-        if '64/110' in line:
+        if '20/110' in line:
             return 'PASS'
         return 'FAIL'
 

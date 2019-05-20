@@ -11,6 +11,7 @@ source $DIR/logger.sh
 user_abort () {
     INFO "Aborting due to user interrupt..."
     sudo killall python &>/dev/null
+	sudo killall click &>/dev/null
     exit 0
 }
 trap user_abort SIGINT
@@ -22,27 +23,10 @@ $DIR/run_pox.sh &> $DIR/pox.log &
 sleep 5
 
 INFO "Starting Mininet..."
-$DIR/run_mininet.sh $DIR/*.cmd 2>&1 | tee $DIR/mininet.log &
-sleep 5
-
-# Dump the flow tables while Mininet is up and running.
-rm -f $FLOWS
-INFO "Starting flow-dump..."
-while true; do
-    if [ -z "$(ps aux | grep run_mininet.sh | grep -v grep)" ]; then
-        break
-    fi
-    echo "FLOW DUMP FIREWALL 1 `date --rfc-3339=seconds`" >> $FLOWS
-    sudo ovs-ofctl dump-flows fw1 >> $FLOWS
-    echo "----------------------------------------------------------------------" >> $FLOWS
-    echo "FLOW DUMP FIREWALL 2 `date --rfc-3339=seconds`" >> $FLOWS
-    sudo ovs-ofctl dump-flows fw2 >> $FLOWS
-    echo "----------------------------------------------------------------------" >> $FLOWS
-    sleep 2
-done
+$DIR/run_mininet.sh $DIR/*.cmd 2>&1 | tee $DIR/mininet.log
 
 mkdir -p $TOPDIR/results/logs
-python3 $DIR/genreport.py $DIR/mininet.log $TOPDIR/results/phase_1_report.txt
+python3 $DIR/genreport.py $DIR/mininet.log $TOPDIR/results/phase_2_report.txt
 for log in $(ls $DIR/*.log); do
     mv $log $TOPDIR/results/logs/$(basename $log)
 done
