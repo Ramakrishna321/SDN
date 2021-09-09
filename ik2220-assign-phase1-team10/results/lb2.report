@@ -1,0 +1,23 @@
+======================= LB2 Report =======================
+Total # of input packets:
+40
+Input packet rate (pps):
+0.39998400064
+Total # of output packets:
+50
+Output packet rate (pps):
+0.497255151563
+----------------------------------------------------------
+ARP requests (internal):
+0
+ARP requests (external):
+2
+----------------------------------------------------------
+IP packets (internal):
+30
+IP packets (external):
+21
+----------------------------------------------------------
+Dropped packets:
+5
+==========================================================
